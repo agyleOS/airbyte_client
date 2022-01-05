@@ -1,5 +1,5 @@
 [package]
-name = "airbyte"
+name = "airbyte_client"
 version = "0.0.1"
 authors = ["OpenAPI Generator team and contributors"]
 edition = "2018"
