@@ -9,4 +9,5 @@ default:
 	mv README2.md README.md
 	sed -i 's/Option<Option/Option<OperatorNormalizationOption/g' src/models/operator_normalization.rs
 	sed -i 's/Option {/OperatorNormalizationOption {/g' src/models/operator_normalization.rs
+	sed -i 's/edition = "2018"/edition = "2021"\ndescription = "Airbyte Client is an unofficial client library for the Airbyte API"\nlicense = "MIT"\ndocumentation = "README.md"\nhomepage = "https:\/\/github.com\/agyleOS\/airbyte_client"\nrepository = "https:\/\/github.com\/agyleOS\/airbyte_client"/g' Cargo.toml
 	cargo fmt

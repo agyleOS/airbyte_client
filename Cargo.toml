@@ -2,7 +2,12 @@
 name = "airbyte_client"
 version = "0.0.1"
 authors = ["OpenAPI Generator team and contributors"]
-edition = "2018"
+edition = "2021"
+description = "Airbyte Client is an unofficial client library for the Airbyte API"
+license = "MIT"
+documentation = "README.md"
+homepage = "https://github.com/agyleOS/airbyte_client"
+repository = "https://github.com/agyleOS/airbyte_client"
 
 [dependencies]
 serde = "^1.0"
