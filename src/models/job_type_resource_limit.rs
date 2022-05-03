@@ -15,7 +15,7 @@ pub struct JobTypeResourceLimit {
     #[serde(rename = "jobType")]
     pub job_type: crate::models::JobType,
     #[serde(rename = "resourceRequirements")]
-    pub resource_requirements: Option<Box<crate::models::ResourceRequirements>>,
+    pub resource_requirements: Option<crate::models::ResourceRequirements>,
 }
 
 impl JobTypeResourceLimit {
@@ -26,7 +26,7 @@ impl JobTypeResourceLimit {
     ) -> JobTypeResourceLimit {
         JobTypeResourceLimit {
             job_type,
-            resource_requirements: Box::new(resource_requirements),
+            resource_requirements,
         }
     }
 }
