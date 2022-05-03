@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**check_connection_to_source**](SourceApi.md#check_connection_to_source) | **POST** /v1/sources/check_connection | Check connection to the source
 [**check_connection_to_source_for_update**](SourceApi.md#check_connection_to_source_for_update) | **POST** /v1/sources/check_connection_for_update | Check connection for a proposed update to a source
+[**clone_source**](SourceApi.md#clone_source) | **POST** /v1/sources/clone | Clone source
 [**create_source**](SourceApi.md#create_source) | **POST** /v1/sources/create | Create a source
 [**delete_source**](SourceApi.md#delete_source) | **POST** /v1/sources/delete | Delete a source
 [**discover_schema_for_source**](SourceApi.md#discover_schema_for_source) | **POST** /v1/sources/discover_schema | Discover the schema catalog of the source
@@ -59,6 +60,34 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**crate::models::CheckConnectionRead**](CheckConnectionRead.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## clone_source
+
+> crate::models::SourceRead clone_source(source_id_request_body)
+Clone source
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**source_id_request_body** | [**SourceIdRequestBody**](SourceIdRequestBody.md) |  | [required] |
+
+### Return type
+
+[**crate::models::SourceRead**](SourceRead.md)
 
 ### Authorization
 
@@ -130,7 +159,7 @@ No authorization required
 
 ## discover_schema_for_source
 
-> crate::models::SourceDiscoverSchemaRead discover_schema_for_source(source_id_request_body)
+> crate::models::SourceDiscoverSchemaRead discover_schema_for_source(source_discover_schema_request_body)
 Discover the schema catalog of the source
 
 ### Parameters
@@ -138,7 +167,7 @@ Discover the schema catalog of the source
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**source_id_request_body** | [**SourceIdRequestBody**](SourceIdRequestBody.md) |  | [required] |
+**source_discover_schema_request_body** | [**SourceDiscoverSchemaRequestBody**](SourceDiscoverSchemaRequestBody.md) |  | [required] |
 
 ### Return type
 

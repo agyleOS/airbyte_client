@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **schedule** | Option<[**crate::models::ConnectionSchedule**](ConnectionSchedule.md)> |  | [optional]
 **status** | [**crate::models::ConnectionStatus**](ConnectionStatus.md) |  | 
 **resource_requirements** | Option<[**crate::models::ResourceRequirements**](ResourceRequirements.md)> |  | [optional]
+**source_catalog_id** | Option<**String**> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

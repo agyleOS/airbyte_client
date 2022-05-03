@@ -1,7 +1,7 @@
 /*
  * Airbyte Configuration API
  *
- * Airbyte Configuration API [https://airbyte.io](https://airbyte.io).  This API is a collection of HTTP RPC-style methods. While it is not a REST API, those familiar with REST should find the conventions of this API recognizable.  Here are some conventions that this API follows: * All endpoints are http POST methods. * All endpoints accept data via `application/json` request bodies. The API does not accept any data via query params. * The naming convention for endpoints is: localhost:8000/{VERSION}/{METHOD_FAMILY}/{METHOD_NAME} e.g. `localhost:8000/v1/connections/create`. * For all `update` methods, the whole object must be passed in, even the fields that did not change.  Change Management: * The major version of the API endpoint can be determined / specified in the URL `localhost:8080/v1/connections/create` * Minor version bumps will be invisible to the end user. The user cannot specify minor versions in requests. * All backwards incompatible changes will happen in major version bumps. We will not make backwards incompatible changes in minor version bumps. Examples of non-breaking changes (includes but not limited to...):   * Adding fields to request or response bodies.   * Adding new HTTP endpoints.
+ * Airbyte Configuration API [https://airbyte.io](https://airbyte.io).  This API is a collection of HTTP RPC-style methods. While it is not a REST API, those familiar with REST should find the conventions of this API recognizable.  Here are some conventions that this API follows: * All endpoints are http POST methods. * All endpoints accept data via `application/json` request bodies. The API does not accept any data via query params. * The naming convention for endpoints is: localhost:8000/{VERSION}/{METHOD_FAMILY}/{METHOD_NAME} e.g. `localhost:8000/v1/connections/create`. * For all `update` methods, the whole object must be passed in, even the fields that did not change.  Change Management: * The major version of the API endpoint can be determined / specified in the URL `localhost:8080/v1/connections/create` * Minor version bumps will be invisible to the end user. The user cannot specify minor versions in requests. * All backwards incompatible changes will happen in major version bumps. We will not make backwards incompatible changes in minor version bumps. Examples of non-breaking changes (includes but not limited to...):   * Adding fields to request or response bodies.   * Adding new HTTP endpoints. * All `web_backend` APIs are not considered public APIs and are not guaranteeing backwards compatibility.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: contact@airbyte.io
@@ -24,6 +24,12 @@ pub struct AttemptRead {
     pub bytes_synced: Option<i64>,
     #[serde(rename = "recordsSynced", skip_serializing_if = "Option::is_none")]
     pub records_synced: Option<i64>,
+    #[serde(rename = "totalStats", skip_serializing_if = "Option::is_none")]
+    pub total_stats: Option<Box<crate::models::AttemptStats>>,
+    #[serde(rename = "streamStats", skip_serializing_if = "Option::is_none")]
+    pub stream_stats: Option<Vec<crate::models::AttemptStreamStats>>,
+    #[serde(rename = "failureSummary", skip_serializing_if = "Option::is_none")]
+    pub failure_summary: Option<Box<crate::models::AttemptFailureSummary>>,
 }
 
 impl AttemptRead {
@@ -41,6 +47,9 @@ impl AttemptRead {
             ended_at: None,
             bytes_synced: None,
             records_synced: None,
+            total_stats: None,
+            stream_stats: None,
+            failure_summary: None,
         }
     }
 }

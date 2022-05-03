@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **send_on_success** | **bool** |  | [default to false]
 **send_on_failure** | **bool** |  | [default to true]
 **slack_configuration** | Option<[**crate::models::SlackNotificationConfiguration**](SlackNotificationConfiguration.md)> |  | [optional]
+**customerio_configuration** | Option<[**serde_json::Value**](.md)> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

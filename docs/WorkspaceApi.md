@@ -11,6 +11,7 @@ Method | HTTP request | Description
 [**list_workspaces**](WorkspaceApi.md#list_workspaces) | **POST** /v1/workspaces/list | List all workspaces registered in the current Airbyte deployment
 [**update_workspace**](WorkspaceApi.md#update_workspace) | **POST** /v1/workspaces/update | Update workspace state
 [**update_workspace_feedback**](WorkspaceApi.md#update_workspace_feedback) | **POST** /v1/workspaces/tag_feedback_status_as_done | Update workspace feedback state
+[**update_workspace_name**](WorkspaceApi.md#update_workspace_name) | **POST** /v1/workspaces/update_name | Update workspace name
 
 
 
@@ -194,6 +195,34 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
  (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## update_workspace_name
+
+> crate::models::WorkspaceRead update_workspace_name(workspace_update_name)
+Update workspace name
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**workspace_update_name** | [**WorkspaceUpdateName**](WorkspaceUpdateName.md) |  | [required] |
+
+### Return type
+
+[**crate::models::WorkspaceRead**](WorkspaceRead.md)
 
 ### Authorization
 

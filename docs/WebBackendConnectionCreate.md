@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **status** | [**crate::models::ConnectionStatus**](ConnectionStatus.md) |  | 
 **resource_requirements** | Option<[**crate::models::ResourceRequirements**](ResourceRequirements.md)> |  | [optional]
 **operations** | Option<[**Vec<crate::models::OperationCreate>**](OperationCreate.md)> |  | [optional]
+**source_catalog_id** | Option<**String**> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

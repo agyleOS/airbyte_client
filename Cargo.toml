@@ -1,6 +1,6 @@
 [package]
 name = "airbyte_client"
-version = "0.0.1"
+version = "0.0.2"
 authors = ["OpenAPI Generator team and contributors"]
 edition = "2021"
 description = "Airbyte Client is an unofficial client library for the Airbyte API"

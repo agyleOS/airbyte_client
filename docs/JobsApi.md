@@ -5,6 +5,7 @@ All URIs are relative to *http://localhost:8000/api*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**cancel_job**](JobsApi.md#cancel_job) | **POST** /v1/jobs/cancel | Cancels a job
+[**get_job_debug_info**](JobsApi.md#get_job_debug_info) | **POST** /v1/jobs/get_debug_info | Gets all information needed to debug this job
 [**get_job_info**](JobsApi.md#get_job_info) | **POST** /v1/jobs/get | Get information about a job
 [**list_jobs_for**](JobsApi.md#list_jobs_for) | **POST** /v1/jobs/list | Returns recent jobs for a connection. Jobs are returned in descending order by createdAt.
 
@@ -25,6 +26,34 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**crate::models::JobInfoRead**](JobInfoRead.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## get_job_debug_info
+
+> crate::models::JobDebugInfoRead get_job_debug_info(job_id_request_body)
+Gets all information needed to debug this job
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**job_id_request_body** | [**JobIdRequestBody**](JobIdRequestBody.md) |  | [required] |
+
+### Return type
+
+[**crate::models::JobDebugInfoRead**](JobDebugInfoRead.md)
 
 ### Authorization
 

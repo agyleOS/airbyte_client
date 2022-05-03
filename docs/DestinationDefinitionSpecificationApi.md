@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 ## get_destination_definition_specification
 
-> crate::models::DestinationDefinitionSpecificationRead get_destination_definition_specification(destination_definition_id_request_body)
+> crate::models::DestinationDefinitionSpecificationRead get_destination_definition_specification(destination_definition_id_with_workspace_id)
 Get specification for a destinationDefinition
 
 ### Parameters
@@ -18,7 +18,7 @@ Get specification for a destinationDefinition
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**destination_definition_id_request_body** | [**DestinationDefinitionIdRequestBody**](DestinationDefinitionIdRequestBody.md) |  | [required] |
+**destination_definition_id_with_workspace_id** | [**DestinationDefinitionIdWithWorkspaceId**](DestinationDefinitionIdWithWorkspaceId.md) |  | [required] |
 
 ### Return type
 

@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**check_connection_to_destination**](DestinationApi.md#check_connection_to_destination) | **POST** /v1/destinations/check_connection | Check connection to the destination
 [**check_connection_to_destination_for_update**](DestinationApi.md#check_connection_to_destination_for_update) | **POST** /v1/destinations/check_connection_for_update | Check connection for a proposed update to a destination
+[**clone_destination**](DestinationApi.md#clone_destination) | **POST** /v1/destinations/clone | Clone destination
 [**create_destination**](DestinationApi.md#create_destination) | **POST** /v1/destinations/create | Create a destination
 [**delete_destination**](DestinationApi.md#delete_destination) | **POST** /v1/destinations/delete | Delete the destination
 [**get_destination**](DestinationApi.md#get_destination) | **POST** /v1/destinations/get | Get configured destination
@@ -58,6 +59,34 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**crate::models::CheckConnectionRead**](CheckConnectionRead.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## clone_destination
+
+> crate::models::DestinationRead clone_destination(destination_id_request_body)
+Clone destination
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**destination_id_request_body** | [**DestinationIdRequestBody**](DestinationIdRequestBody.md) |  | [required] |
+
+### Return type
+
+[**crate::models::DestinationRead**](DestinationRead.md)
 
 ### Authorization
 

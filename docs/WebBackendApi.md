@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**web_backend_create_connection**](WebBackendApi.md#web_backend_create_connection) | **POST** /v1/web_backend/connections/create | Create a connection
 [**web_backend_get_connection**](WebBackendApi.md#web_backend_get_connection) | **POST** /v1/web_backend/connections/get | Get a connection
+[**web_backend_get_workspace_state**](WebBackendApi.md#web_backend_get_workspace_state) | **POST** /v1/web_backend/workspace/state | Returns the current state of a workspace
 [**web_backend_list_all_connections_for_workspace**](WebBackendApi.md#web_backend_list_all_connections_for_workspace) | **POST** /v1/web_backend/connections/list_all | Returns all connections for a workspace.
 [**web_backend_list_connections_for_workspace**](WebBackendApi.md#web_backend_list_connections_for_workspace) | **POST** /v1/web_backend/connections/list | Returns all non-deleted connections for a workspace.
 [**web_backend_search_connections**](WebBackendApi.md#web_backend_search_connections) | **POST** /v1/web_backend/connections/search | Search connections
@@ -56,6 +57,34 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**crate::models::WebBackendConnectionRead**](WebBackendConnectionRead.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## web_backend_get_workspace_state
+
+> crate::models::WebBackendWorkspaceStateResult web_backend_get_workspace_state(web_backend_workspace_state)
+Returns the current state of a workspace
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**web_backend_workspace_state** | Option<[**WebBackendWorkspaceState**](WebBackendWorkspaceState.md)> |  |  |
+
+### Return type
+
+[**crate::models::WebBackendWorkspaceStateResult**](WebBackendWorkspaceStateResult.md)
 
 ### Authorization
 

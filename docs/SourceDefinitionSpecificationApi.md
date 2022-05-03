@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 ## get_source_definition_specification
 
-> crate::models::SourceDefinitionSpecificationRead get_source_definition_specification(source_definition_id_request_body)
+> crate::models::SourceDefinitionSpecificationRead get_source_definition_specification(source_definition_id_with_workspace_id)
 Get specification for a SourceDefinition.
 
 ### Parameters
@@ -18,7 +18,7 @@ Get specification for a SourceDefinition.
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**source_definition_id_request_body** | [**SourceDefinitionIdRequestBody**](SourceDefinitionIdRequestBody.md) |  | [required] |
+**source_definition_id_with_workspace_id** | [**SourceDefinitionIdWithWorkspaceId**](SourceDefinitionIdWithWorkspaceId.md) |  | [required] |
 
 ### Return type
 
