@@ -11,20 +11,27 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct DestinationCoreConfig {
     #[serde(rename = "destinationDefinitionId")]
-    pub destination_definition_id: String,
+    pub destination_definition_id: uuid::Uuid,
     /// The values required to configure the destination. The schema for this must match the schema return by destination_definition_specifications/get for the destinationDefinition.
-    #[serde(rename = "connectionConfiguration")]
+    #[serde(
+        rename = "connectionConfiguration",
+        deserialize_with = "Option::deserialize"
+    )]
     pub connection_configuration: Option<serde_json::Value>,
+    #[serde(rename = "workspaceId")]
+    pub workspace_id: uuid::Uuid,
 }
 
 impl DestinationCoreConfig {
     pub fn new(
-        destination_definition_id: String,
+        destination_definition_id: uuid::Uuid,
         connection_configuration: Option<serde_json::Value>,
+        workspace_id: uuid::Uuid,
     ) -> DestinationCoreConfig {
         DestinationCoreConfig {
             destination_definition_id,
             connection_configuration,
+            workspace_id,
         }
     }
 }

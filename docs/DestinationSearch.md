@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**destination_definition_id** | Option<**String**> |  | [optional]
-**destination_id** | Option<**String**> |  | [optional]
-**workspace_id** | Option<**String**> |  | [optional]
+**destination_definition_id** | Option<[**uuid::Uuid**](uuid::Uuid.md)> |  | [optional]
+**destination_id** | Option<[**uuid::Uuid**](uuid::Uuid.md)> |  | [optional]
+**workspace_id** | Option<[**uuid::Uuid**](uuid::Uuid.md)> |  | [optional]
 **connection_configuration** | Option<[**serde_json::Value**](.md)> | The values required to configure the destination. The schema for this must match the schema return by destination_definition_specifications/get for the destinationDefinition. | [optional]
 **name** | Option<**String**> |  | [optional]
 **destination_name** | Option<**String**> |  | [optional]

@@ -11,13 +11,13 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct ImportRequestBody {
     #[serde(rename = "resourceId")]
-    pub resource_id: String,
+    pub resource_id: uuid::Uuid,
     #[serde(rename = "workspaceId")]
-    pub workspace_id: String,
+    pub workspace_id: uuid::Uuid,
 }
 
 impl ImportRequestBody {
-    pub fn new(resource_id: String, workspace_id: String) -> ImportRequestBody {
+    pub fn new(resource_id: uuid::Uuid, workspace_id: uuid::Uuid) -> ImportRequestBody {
         ImportRequestBody {
             resource_id,
             workspace_id,

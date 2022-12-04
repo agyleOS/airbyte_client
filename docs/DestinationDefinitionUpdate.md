@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**destination_definition_id** | **String** |  | 
+**destination_definition_id** | [**uuid::Uuid**](uuid::Uuid.md) |  | 
 **docker_image_tag** | Option<**String**> |  | [optional]
 **resource_requirements** | Option<[**crate::models::ActorDefinitionResourceRequirements**](ActorDefinitionResourceRequirements.md)> |  | [optional]
 

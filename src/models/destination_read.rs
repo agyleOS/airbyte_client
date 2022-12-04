@@ -11,25 +11,30 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct DestinationRead {
     #[serde(rename = "destinationDefinitionId")]
-    pub destination_definition_id: String,
+    pub destination_definition_id: uuid::Uuid,
     #[serde(rename = "destinationId")]
-    pub destination_id: String,
+    pub destination_id: uuid::Uuid,
     #[serde(rename = "workspaceId")]
-    pub workspace_id: String,
+    pub workspace_id: uuid::Uuid,
     /// The values required to configure the destination. The schema for this must match the schema return by destination_definition_specifications/get for the destinationDefinition.
-    #[serde(rename = "connectionConfiguration")]
+    #[serde(
+        rename = "connectionConfiguration",
+        deserialize_with = "Option::deserialize"
+    )]
     pub connection_configuration: Option<serde_json::Value>,
     #[serde(rename = "name")]
     pub name: String,
     #[serde(rename = "destinationName")]
     pub destination_name: String,
+    #[serde(rename = "icon", skip_serializing_if = "Option::is_none")]
+    pub icon: Option<String>,
 }
 
 impl DestinationRead {
     pub fn new(
-        destination_definition_id: String,
-        destination_id: String,
-        workspace_id: String,
+        destination_definition_id: uuid::Uuid,
+        destination_id: uuid::Uuid,
+        workspace_id: uuid::Uuid,
         connection_configuration: Option<serde_json::Value>,
         name: String,
         destination_name: String,
@@ -41,6 +46,7 @@ impl DestinationRead {
             connection_configuration,
             name,
             destination_name,
+            icon: None,
         }
     }
 }

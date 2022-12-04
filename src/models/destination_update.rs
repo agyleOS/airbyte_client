@@ -11,9 +11,12 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct DestinationUpdate {
     #[serde(rename = "destinationId")]
-    pub destination_id: String,
+    pub destination_id: uuid::Uuid,
     /// The values required to configure the destination. The schema for this must match the schema return by destination_definition_specifications/get for the destinationDefinition.
-    #[serde(rename = "connectionConfiguration")]
+    #[serde(
+        rename = "connectionConfiguration",
+        deserialize_with = "Option::deserialize"
+    )]
     pub connection_configuration: Option<serde_json::Value>,
     #[serde(rename = "name")]
     pub name: String,
@@ -21,7 +24,7 @@ pub struct DestinationUpdate {
 
 impl DestinationUpdate {
     pub fn new(
-        destination_id: String,
+        destination_id: uuid::Uuid,
         connection_configuration: Option<serde_json::Value>,
         name: String,
     ) -> DestinationUpdate {

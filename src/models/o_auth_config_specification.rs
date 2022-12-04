@@ -10,30 +10,38 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct OAuthConfigSpecification {
-    /// OAuth specific blob.
+    /// The values required to configure OAuth flows. The schema for this must match the `OAuthConfigSpecification.oauthUserInputFromConnectorConfigSpecification` schema.
     #[serde(
         rename = "oauthUserInputFromConnectorConfigSpecification",
+        default,
+        with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub oauth_user_input_from_connector_config_specification: Option<serde_json::Value>,
-    /// OAuth specific blob.
+    pub oauth_user_input_from_connector_config_specification: Option<Option<serde_json::Value>>,
+    /// The values required to configure OAuth flows. The schema for this must match the `OAuthConfigSpecification.oauthUserInputFromConnectorConfigSpecification` schema.
     #[serde(
         rename = "completeOAuthOutputSpecification",
+        default,
+        with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub complete_o_auth_output_specification: Option<serde_json::Value>,
-    /// OAuth specific blob.
+    pub complete_o_auth_output_specification: Option<Option<serde_json::Value>>,
+    /// The values required to configure OAuth flows. The schema for this must match the `OAuthConfigSpecification.oauthUserInputFromConnectorConfigSpecification` schema.
     #[serde(
         rename = "completeOAuthServerInputSpecification",
+        default,
+        with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub complete_o_auth_server_input_specification: Option<serde_json::Value>,
-    /// OAuth specific blob.
+    pub complete_o_auth_server_input_specification: Option<Option<serde_json::Value>>,
+    /// The values required to configure OAuth flows. The schema for this must match the `OAuthConfigSpecification.oauthUserInputFromConnectorConfigSpecification` schema.
     #[serde(
         rename = "completeOAuthServerOutputSpecification",
+        default,
+        with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub complete_o_auth_server_output_specification: Option<serde_json::Value>,
+    pub complete_o_auth_server_output_specification: Option<Option<serde_json::Value>>,
 }
 
 impl OAuthConfigSpecification {

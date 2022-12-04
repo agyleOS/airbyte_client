@@ -5,8 +5,10 @@ All URIs are relative to *http://localhost:8000/api*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**cancel_job**](JobsApi.md#cancel_job) | **POST** /v1/jobs/cancel | Cancels a job
+[**get_attempt_normalization_statuses_for_job**](JobsApi.md#get_attempt_normalization_statuses_for_job) | **POST** /v1/jobs/get_normalization_status | Get normalization status to determine if we can bypass normalization phase
 [**get_job_debug_info**](JobsApi.md#get_job_debug_info) | **POST** /v1/jobs/get_debug_info | Gets all information needed to debug this job
 [**get_job_info**](JobsApi.md#get_job_info) | **POST** /v1/jobs/get | Get information about a job
+[**get_job_info_light**](JobsApi.md#get_job_info_light) | **POST** /v1/jobs/get_light | Get information about a job excluding attempt info and logs
 [**list_jobs_for**](JobsApi.md#list_jobs_for) | **POST** /v1/jobs/list | Returns recent jobs for a connection. Jobs are returned in descending order by createdAt.
 
 
@@ -26,6 +28,34 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**crate::models::JobInfoRead**](JobInfoRead.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## get_attempt_normalization_statuses_for_job
+
+> crate::models::AttemptNormalizationStatusReadList get_attempt_normalization_statuses_for_job(job_id_request_body)
+Get normalization status to determine if we can bypass normalization phase
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**job_id_request_body** | Option<[**JobIdRequestBody**](JobIdRequestBody.md)> |  |  |
+
+### Return type
+
+[**crate::models::AttemptNormalizationStatusReadList**](AttemptNormalizationStatusReadList.md)
 
 ### Authorization
 
@@ -82,6 +112,34 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**crate::models::JobInfoRead**](JobInfoRead.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## get_job_info_light
+
+> crate::models::JobInfoLightRead get_job_info_light(job_id_request_body)
+Get information about a job excluding attempt info and logs
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**job_id_request_body** | [**JobIdRequestBody**](JobIdRequestBody.md) |  | [required] |
+
+### Return type
+
+[**crate::models::JobInfoLightRead**](JobInfoLightRead.md)
 
 ### Authorization
 

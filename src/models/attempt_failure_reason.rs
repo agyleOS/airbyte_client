@@ -16,6 +16,8 @@ pub struct AttemptFailureReason {
     pub failure_type: Option<crate::models::AttemptFailureType>,
     #[serde(rename = "externalMessage", skip_serializing_if = "Option::is_none")]
     pub external_message: Option<String>,
+    #[serde(rename = "internalMessage", skip_serializing_if = "Option::is_none")]
+    pub internal_message: Option<String>,
     #[serde(rename = "stacktrace", skip_serializing_if = "Option::is_none")]
     pub stacktrace: Option<String>,
     /// True if it is known that retrying may succeed, e.g. for a transient failure. False if it is known that a retry will not succeed, e.g. for a configuration issue. If not set, retryable status is not well known.
@@ -31,6 +33,7 @@ impl AttemptFailureReason {
             failure_origin: None,
             failure_type: None,
             external_message: None,
+            internal_message: None,
             stacktrace: None,
             retryable: None,
             timestamp,

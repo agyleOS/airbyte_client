@@ -13,6 +13,15 @@ use reqwest;
 use super::{configuration, Error};
 use crate::apis::ResponseContent;
 
+/// struct for typed errors of method [`get_state_type`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetStateTypeError {
+    Status404(crate::models::NotFoundKnownExceptionInfo),
+    Status422(crate::models::InvalidInputExceptionInfo),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`web_backend_create_connection`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -39,15 +48,6 @@ pub enum WebBackendGetWorkspaceStateError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`web_backend_list_all_connections_for_workspace`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum WebBackendListAllConnectionsForWorkspaceError {
-    Status404(crate::models::NotFoundKnownExceptionInfo),
-    Status422(crate::models::InvalidInputExceptionInfo),
-    UnknownValue(serde_json::Value),
-}
-
 /// struct for typed errors of method [`web_backend_list_connections_for_workspace`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -57,11 +57,10 @@ pub enum WebBackendListConnectionsForWorkspaceError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`web_backend_search_connections`]
+/// struct for typed errors of method [`web_backend_list_geographies`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum WebBackendSearchConnectionsError {
-    Status422(crate::models::InvalidInputExceptionInfo),
+pub enum WebBackendListGeographiesError {
     UnknownValue(serde_json::Value),
 }
 
@@ -71,6 +70,47 @@ pub enum WebBackendSearchConnectionsError {
 pub enum WebBackendUpdateConnectionError {
     Status422(crate::models::InvalidInputExceptionInfo),
     UnknownValue(serde_json::Value),
+}
+
+pub async fn get_state_type(
+    configuration: &configuration::Configuration,
+    connection_id_request_body: crate::models::ConnectionIdRequestBody,
+) -> Result<crate::models::ConnectionStateType, Error<GetStateTypeError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!(
+        "{}/v1/web_backend/state/get_type",
+        local_var_configuration.base_path
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    local_var_req_builder = local_var_req_builder.json(&connection_id_request_body);
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<GetStateTypeError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
+        Err(Error::ResponseError(local_var_error))
+    }
 }
 
 pub async fn web_backend_create_connection(
@@ -197,50 +237,6 @@ pub async fn web_backend_get_workspace_state(
     }
 }
 
-pub async fn web_backend_list_all_connections_for_workspace(
-    configuration: &configuration::Configuration,
-    workspace_id_request_body: crate::models::WorkspaceIdRequestBody,
-) -> Result<
-    crate::models::WebBackendConnectionReadList,
-    Error<WebBackendListAllConnectionsForWorkspaceError>,
-> {
-    let local_var_configuration = configuration;
-
-    let local_var_client = &local_var_configuration.client;
-
-    let local_var_uri_str = format!(
-        "{}/v1/web_backend/connections/list_all",
-        local_var_configuration.base_path
-    );
-    let mut local_var_req_builder =
-        local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
-
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder =
-            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
-    }
-    local_var_req_builder = local_var_req_builder.json(&workspace_id_request_body);
-
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
-
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
-
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
-    } else {
-        let local_var_entity: Option<WebBackendListAllConnectionsForWorkspaceError> =
-            serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-        };
-        Err(Error::ResponseError(local_var_error))
-    }
-}
-
 pub async fn web_backend_list_connections_for_workspace(
     configuration: &configuration::Configuration,
     workspace_id_request_body: crate::models::WorkspaceIdRequestBody,
@@ -285,16 +281,16 @@ pub async fn web_backend_list_connections_for_workspace(
     }
 }
 
-pub async fn web_backend_search_connections(
+/// Returns all available geographies in which a data sync can run.
+pub async fn web_backend_list_geographies(
     configuration: &configuration::Configuration,
-    web_backend_connection_search: crate::models::WebBackendConnectionSearch,
-) -> Result<crate::models::WebBackendConnectionReadList, Error<WebBackendSearchConnectionsError>> {
+) -> Result<crate::models::WebBackendGeographiesListResult, Error<WebBackendListGeographiesError>> {
     let local_var_configuration = configuration;
 
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!(
-        "{}/v1/web_backend/connections/search",
+        "{}/v1/web_backend/geographies/list",
         local_var_configuration.base_path
     );
     let mut local_var_req_builder =
@@ -304,7 +300,6 @@ pub async fn web_backend_search_connections(
         local_var_req_builder =
             local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
-    local_var_req_builder = local_var_req_builder.json(&web_backend_connection_search);
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;
@@ -315,7 +310,7 @@ pub async fn web_backend_search_connections(
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<WebBackendSearchConnectionsError> =
+        let local_var_entity: Option<WebBackendListGeographiesError> =
             serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent {
             status: local_var_status,
@@ -326,6 +321,7 @@ pub async fn web_backend_search_connections(
     }
 }
 
+/// Apply a patch-style update to a connection. Only fields present on the update request body will be updated. Any operations that lack an ID will be created. Then, the newly created operationId will be applied to the connection along with the rest of the operationIds in the request body. Apply a patch-style update to a connection. Only fields present on the update request body will be updated. Note that if a catalog is present in the request body, the connection's entire catalog will be replaced with the catalog from the request. This means that to modify a single stream, the entire new catalog  containing the updated stream needs to be sent.
 pub async fn web_backend_update_connection(
     configuration: &configuration::Configuration,
     web_backend_connection_update: crate::models::WebBackendConnectionUpdate,

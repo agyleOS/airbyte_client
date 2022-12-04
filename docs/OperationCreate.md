@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**workspace_id** | **String** |  | 
+**workspace_id** | [**uuid::Uuid**](uuid::Uuid.md) |  | 
 **name** | **String** |  | 
 **operator_configuration** | [**crate::models::OperatorConfiguration**](OperatorConfiguration.md) |  | 
 

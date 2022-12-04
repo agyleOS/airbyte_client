@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**destination_definition_id** | **String** |  | 
+**destination_definition_id** | [**uuid::Uuid**](uuid::Uuid.md) |  | 
 **documentation_url** | Option<**String**> |  | [optional]
 **connection_specification** | Option<[**serde_json::Value**](.md)> | The specification for what values are required to configure the destinationDefinition. | [optional]
 **auth_specification** | Option<[**crate::models::AuthSpecification**](AuthSpecification.md)> |  | [optional]

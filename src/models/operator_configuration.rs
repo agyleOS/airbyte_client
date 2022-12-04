@@ -16,6 +16,8 @@ pub struct OperatorConfiguration {
     pub normalization: Option<Box<crate::models::OperatorNormalization>>,
     #[serde(rename = "dbt", skip_serializing_if = "Option::is_none")]
     pub dbt: Option<Box<crate::models::OperatorDbt>>,
+    #[serde(rename = "webhook", skip_serializing_if = "Option::is_none")]
+    pub webhook: Option<Box<crate::models::OperatorWebhook>>,
 }
 
 impl OperatorConfiguration {
@@ -24,6 +26,7 @@ impl OperatorConfiguration {
             operator_type,
             normalization: None,
             dbt: None,
+            webhook: None,
         }
     }
 }

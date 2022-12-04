@@ -12,10 +12,16 @@
 pub struct JobReadList {
     #[serde(rename = "jobs")]
     pub jobs: Vec<crate::models::JobWithAttemptsRead>,
+    /// the total count of jobs for the specified connection
+    #[serde(rename = "totalJobCount")]
+    pub total_job_count: i64,
 }
 
 impl JobReadList {
-    pub fn new(jobs: Vec<crate::models::JobWithAttemptsRead>) -> JobReadList {
-        JobReadList { jobs }
+    pub fn new(jobs: Vec<crate::models::JobWithAttemptsRead>, total_job_count: i64) -> JobReadList {
+        JobReadList {
+            jobs,
+            total_job_count,
+        }
     }
 }

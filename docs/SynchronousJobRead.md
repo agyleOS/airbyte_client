@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **String** |  | 
+**id** | [**uuid::Uuid**](uuid::Uuid.md) |  | 
 **config_type** | [**crate::models::JobConfigType**](JobConfigType.md) |  | 
 **config_id** | Option<**String**> | only present if a config id was provided. | [optional]
 **created_at** | **i64** |  | 

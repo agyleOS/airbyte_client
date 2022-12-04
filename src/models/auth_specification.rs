@@ -32,11 +32,11 @@ impl AuthSpecification {
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum AuthType {
     #[serde(rename = "oauth2.0")]
-    Oauth20,
+    Oauth2Period0,
 }
 
 impl Default for AuthType {
     fn default() -> AuthType {
-        Self::Oauth20
+        Self::Oauth2Period0
     }
 }

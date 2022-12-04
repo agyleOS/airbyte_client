@@ -11,25 +11,30 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct SourceRead {
     #[serde(rename = "sourceDefinitionId")]
-    pub source_definition_id: String,
+    pub source_definition_id: uuid::Uuid,
     #[serde(rename = "sourceId")]
-    pub source_id: String,
+    pub source_id: uuid::Uuid,
     #[serde(rename = "workspaceId")]
-    pub workspace_id: String,
+    pub workspace_id: uuid::Uuid,
     /// The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source.
-    #[serde(rename = "connectionConfiguration")]
+    #[serde(
+        rename = "connectionConfiguration",
+        deserialize_with = "Option::deserialize"
+    )]
     pub connection_configuration: Option<serde_json::Value>,
     #[serde(rename = "name")]
     pub name: String,
     #[serde(rename = "sourceName")]
     pub source_name: String,
+    #[serde(rename = "icon", skip_serializing_if = "Option::is_none")]
+    pub icon: Option<String>,
 }
 
 impl SourceRead {
     pub fn new(
-        source_definition_id: String,
-        source_id: String,
-        workspace_id: String,
+        source_definition_id: uuid::Uuid,
+        source_id: uuid::Uuid,
+        workspace_id: uuid::Uuid,
         connection_configuration: Option<serde_json::Value>,
         name: String,
         source_name: String,
@@ -41,6 +46,7 @@ impl SourceRead {
             connection_configuration,
             name,
             source_name,
+            icon: None,
         }
     }
 }

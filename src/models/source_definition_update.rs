@@ -13,7 +13,7 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct SourceDefinitionUpdate {
     #[serde(rename = "sourceDefinitionId")]
-    pub source_definition_id: String,
+    pub source_definition_id: uuid::Uuid,
     #[serde(rename = "dockerImageTag")]
     pub docker_image_tag: String,
     #[serde(
@@ -25,7 +25,10 @@ pub struct SourceDefinitionUpdate {
 
 impl SourceDefinitionUpdate {
     /// Update the SourceDefinition. Currently, the only allowed attribute to update is the default docker image version.
-    pub fn new(source_definition_id: String, docker_image_tag: String) -> SourceDefinitionUpdate {
+    pub fn new(
+        source_definition_id: uuid::Uuid,
+        docker_image_tag: String,
+    ) -> SourceDefinitionUpdate {
         SourceDefinitionUpdate {
             source_definition_id,
             docker_image_tag,

@@ -11,7 +11,7 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct SourceDefinitionRead {
     #[serde(rename = "sourceDefinitionId")]
-    pub source_definition_id: String,
+    pub source_definition_id: uuid::Uuid,
     #[serde(rename = "name")]
     pub name: String,
     #[serde(rename = "dockerRepository")]
@@ -22,11 +22,16 @@ pub struct SourceDefinitionRead {
     pub documentation_url: Option<String>,
     #[serde(rename = "icon", skip_serializing_if = "Option::is_none")]
     pub icon: Option<String>,
+    /// The Airbyte Protocol version supported by the connector
+    #[serde(rename = "protocolVersion", skip_serializing_if = "Option::is_none")]
+    pub protocol_version: Option<String>,
     #[serde(rename = "releaseStage", skip_serializing_if = "Option::is_none")]
     pub release_stage: Option<crate::models::ReleaseStage>,
     /// The date when this connector was first released, in yyyy-mm-dd format.
     #[serde(rename = "releaseDate", skip_serializing_if = "Option::is_none")]
     pub release_date: Option<String>,
+    #[serde(rename = "sourceType", skip_serializing_if = "Option::is_none")]
+    pub source_type: Option<SourceType>,
     #[serde(
         rename = "resourceRequirements",
         skip_serializing_if = "Option::is_none"
@@ -36,7 +41,7 @@ pub struct SourceDefinitionRead {
 
 impl SourceDefinitionRead {
     pub fn new(
-        source_definition_id: String,
+        source_definition_id: uuid::Uuid,
         name: String,
         docker_repository: String,
         docker_image_tag: String,
@@ -48,9 +53,30 @@ impl SourceDefinitionRead {
             docker_image_tag,
             documentation_url: None,
             icon: None,
+            protocol_version: None,
             release_stage: None,
             release_date: None,
+            source_type: None,
             resource_requirements: None,
         }
+    }
+}
+
+///
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum SourceType {
+    #[serde(rename = "api")]
+    Api,
+    #[serde(rename = "file")]
+    File,
+    #[serde(rename = "database")]
+    Database,
+    #[serde(rename = "custom")]
+    Custom,
+}
+
+impl Default for SourceType {
+    fn default() -> SourceType {
+        Self::Api
     }
 }

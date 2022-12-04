@@ -15,6 +15,7 @@ pub struct AirbyteStream {
     /// Stream's name.
     #[serde(rename = "name")]
     pub name: String,
+    /// Stream schema using Json Schema specs.
     #[serde(rename = "jsonSchema", skip_serializing_if = "Option::is_none")]
     pub json_schema: Option<serde_json::Value>,
     #[serde(rename = "supportedSyncModes", skip_serializing_if = "Option::is_none")]

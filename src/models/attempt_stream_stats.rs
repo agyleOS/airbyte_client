@@ -13,14 +13,14 @@ pub struct AttemptStreamStats {
     #[serde(rename = "streamName")]
     pub stream_name: String,
     #[serde(rename = "stats")]
-    pub stats: Option<crate::models::AttemptStats>,
+    pub stats: Box<crate::models::AttemptStats>,
 }
 
 impl AttemptStreamStats {
-    pub fn new(
-        stream_name: String,
-        stats: Option<crate::models::AttemptStats>,
-    ) -> AttemptStreamStats {
-        AttemptStreamStats { stream_name, stats }
+    pub fn new(stream_name: String, stats: crate::models::AttemptStats) -> AttemptStreamStats {
+        AttemptStreamStats {
+            stream_name,
+            stats: Box::new(stats),
+        }
     }
 }

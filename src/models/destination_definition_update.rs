@@ -11,7 +11,7 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct DestinationDefinitionUpdate {
     #[serde(rename = "destinationDefinitionId")]
-    pub destination_definition_id: String,
+    pub destination_definition_id: uuid::Uuid,
     #[serde(rename = "dockerImageTag", skip_serializing_if = "Option::is_none")]
     pub docker_image_tag: Option<String>,
     #[serde(
@@ -22,7 +22,7 @@ pub struct DestinationDefinitionUpdate {
 }
 
 impl DestinationDefinitionUpdate {
-    pub fn new(destination_definition_id: String) -> DestinationDefinitionUpdate {
+    pub fn new(destination_definition_id: uuid::Uuid) -> DestinationDefinitionUpdate {
         DestinationDefinitionUpdate {
             destination_definition_id,
             docker_image_tag: None,

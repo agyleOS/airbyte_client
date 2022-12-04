@@ -11,12 +11,12 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct WebBackendConnectionReadList {
     #[serde(rename = "connections")]
-    pub connections: Vec<crate::models::WebBackendConnectionRead>,
+    pub connections: Vec<crate::models::WebBackendConnectionListItem>,
 }
 
 impl WebBackendConnectionReadList {
     pub fn new(
-        connections: Vec<crate::models::WebBackendConnectionRead>,
+        connections: Vec<crate::models::WebBackendConnectionListItem>,
     ) -> WebBackendConnectionReadList {
         WebBackendConnectionReadList { connections }
     }

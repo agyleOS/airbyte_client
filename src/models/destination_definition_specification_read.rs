@@ -11,15 +11,17 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct DestinationDefinitionSpecificationRead {
     #[serde(rename = "destinationDefinitionId")]
-    pub destination_definition_id: String,
+    pub destination_definition_id: uuid::Uuid,
     #[serde(rename = "documentationUrl", skip_serializing_if = "Option::is_none")]
     pub documentation_url: Option<String>,
     /// The specification for what values are required to configure the destinationDefinition.
     #[serde(
         rename = "connectionSpecification",
+        default,
+        with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub connection_specification: Option<serde_json::Value>,
+    pub connection_specification: Option<Option<serde_json::Value>>,
     #[serde(rename = "authSpecification", skip_serializing_if = "Option::is_none")]
     pub auth_specification: Option<Box<crate::models::AuthSpecification>>,
     #[serde(rename = "advancedAuth", skip_serializing_if = "Option::is_none")]
@@ -42,7 +44,7 @@ pub struct DestinationDefinitionSpecificationRead {
 
 impl DestinationDefinitionSpecificationRead {
     pub fn new(
-        destination_definition_id: String,
+        destination_definition_id: uuid::Uuid,
         job_info: crate::models::SynchronousJobRead,
     ) -> DestinationDefinitionSpecificationRead {
         DestinationDefinitionSpecificationRead {

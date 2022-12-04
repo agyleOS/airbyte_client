@@ -11,14 +11,14 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct CustomDestinationDefinitionCreate {
     #[serde(rename = "workspaceId")]
-    pub workspace_id: String,
+    pub workspace_id: uuid::Uuid,
     #[serde(rename = "destinationDefinition")]
     pub destination_definition: Box<crate::models::DestinationDefinitionCreate>,
 }
 
 impl CustomDestinationDefinitionCreate {
     pub fn new(
-        workspace_id: String,
+        workspace_id: uuid::Uuid,
         destination_definition: crate::models::DestinationDefinitionCreate,
     ) -> CustomDestinationDefinitionCreate {
         CustomDestinationDefinitionCreate {

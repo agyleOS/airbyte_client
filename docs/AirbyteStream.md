@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **String** | Stream's name. | 
-**json_schema** | Option<[**serde_json::Value**](.md)> |  | [optional]
+**json_schema** | Option<[**serde_json::Value**](.md)> | Stream schema using Json Schema specs. | [optional]
 **supported_sync_modes** | Option<[**Vec<crate::models::SyncMode>**](SyncMode.md)> |  | [optional]
 **source_defined_cursor** | Option<**bool**> | If the source defines the cursor field, then any other cursor field inputs will be ignored. If it does not, either the user_provided one is used, or the default one is used as a backup. | [optional]
 **default_cursor_field** | Option<**Vec<String>**> | Path to the field that will be used to determine if a record is new or modified since the last sync. If not provided by the source, the end user will have to specify the comparable themselves. | [optional]

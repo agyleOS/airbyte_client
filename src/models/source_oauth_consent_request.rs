@@ -11,24 +11,28 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct SourceOauthConsentRequest {
     #[serde(rename = "sourceDefinitionId")]
-    pub source_definition_id: String,
+    pub source_definition_id: uuid::Uuid,
     #[serde(rename = "workspaceId")]
-    pub workspace_id: String,
+    pub workspace_id: uuid::Uuid,
     /// The url to redirect to after getting the user consent
     #[serde(rename = "redirectUrl")]
     pub redirect_url: String,
-    /// OAuth specific blob.
+    /// The values required to configure OAuth flows. The schema for this must match the `OAuthConfigSpecification.oauthUserInputFromConnectorConfigSpecification` schema.
     #[serde(
         rename = "oAuthInputConfiguration",
+        default,
+        with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub o_auth_input_configuration: Option<serde_json::Value>,
+    pub o_auth_input_configuration: Option<Option<serde_json::Value>>,
+    #[serde(rename = "sourceId", skip_serializing_if = "Option::is_none")]
+    pub source_id: Option<uuid::Uuid>,
 }
 
 impl SourceOauthConsentRequest {
     pub fn new(
-        source_definition_id: String,
-        workspace_id: String,
+        source_definition_id: uuid::Uuid,
+        workspace_id: uuid::Uuid,
         redirect_url: String,
     ) -> SourceOauthConsentRequest {
         SourceOauthConsentRequest {
@@ -36,6 +40,7 @@ impl SourceOauthConsentRequest {
             workspace_id,
             redirect_url,
             o_auth_input_configuration: None,
+            source_id: None,
         }
     }
 }

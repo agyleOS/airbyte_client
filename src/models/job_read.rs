@@ -22,6 +22,8 @@ pub struct JobRead {
     pub updated_at: i64,
     #[serde(rename = "status")]
     pub status: crate::models::JobStatus,
+    #[serde(rename = "resetConfig", skip_serializing_if = "Option::is_none")]
+    pub reset_config: Option<Box<crate::models::ResetConfig>>,
 }
 
 impl JobRead {
@@ -40,6 +42,7 @@ impl JobRead {
             created_at,
             updated_at,
             status,
+            reset_config: None,
         }
     }
 }

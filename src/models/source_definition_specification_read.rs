@@ -11,7 +11,7 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct SourceDefinitionSpecificationRead {
     #[serde(rename = "sourceDefinitionId")]
-    pub source_definition_id: String,
+    pub source_definition_id: uuid::Uuid,
     #[serde(rename = "documentationUrl", skip_serializing_if = "Option::is_none")]
     pub documentation_url: Option<String>,
     /// The specification for what values are required to configure the sourceDefinition.
@@ -30,7 +30,7 @@ pub struct SourceDefinitionSpecificationRead {
 
 impl SourceDefinitionSpecificationRead {
     pub fn new(
-        source_definition_id: String,
+        source_definition_id: uuid::Uuid,
         job_info: crate::models::SynchronousJobRead,
     ) -> SourceDefinitionSpecificationRead {
         SourceDefinitionSpecificationRead {

@@ -175,7 +175,7 @@ pub async fn check_connection_to_destination_for_update(
 
 pub async fn clone_destination(
     configuration: &configuration::Configuration,
-    destination_id_request_body: crate::models::DestinationIdRequestBody,
+    destination_clone_request_body: crate::models::DestinationCloneRequestBody,
 ) -> Result<crate::models::DestinationRead, Error<CloneDestinationError>> {
     let local_var_configuration = configuration;
 
@@ -192,7 +192,7 @@ pub async fn clone_destination(
         local_var_req_builder =
             local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
-    local_var_req_builder = local_var_req_builder.json(&destination_id_request_body);
+    local_var_req_builder = local_var_req_builder.json(&destination_clone_request_body);
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;

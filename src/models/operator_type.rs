@@ -15,6 +15,8 @@ pub enum OperatorType {
     Normalization,
     #[serde(rename = "dbt")]
     Dbt,
+    #[serde(rename = "webhook")]
+    Webhook,
 }
 
 impl ToString for OperatorType {
@@ -22,6 +24,7 @@ impl ToString for OperatorType {
         match self {
             Self::Normalization => String::from("normalization"),
             Self::Dbt => String::from("dbt"),
+            Self::Webhook => String::from("webhook"),
         }
     }
 }

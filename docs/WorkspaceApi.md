@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**create_workspace**](WorkspaceApi.md#create_workspace) | **POST** /v1/workspaces/create | Creates a workspace
 [**delete_workspace**](WorkspaceApi.md#delete_workspace) | **POST** /v1/workspaces/delete | Deletes a workspace
 [**get_workspace**](WorkspaceApi.md#get_workspace) | **POST** /v1/workspaces/get | Find workspace by ID
+[**get_workspace_by_connection_id**](WorkspaceApi.md#get_workspace_by_connection_id) | **POST** /v1/workspaces/get_by_connection_id | Find workspace by connection id
 [**get_workspace_by_slug**](WorkspaceApi.md#get_workspace_by_slug) | **POST** /v1/workspaces/get_by_slug | Find workspace by slug
 [**list_workspaces**](WorkspaceApi.md#list_workspaces) | **POST** /v1/workspaces/list | List all workspaces registered in the current Airbyte deployment
 [**update_workspace**](WorkspaceApi.md#update_workspace) | **POST** /v1/workspaces/update | Update workspace state
@@ -82,6 +83,34 @@ Find workspace by ID
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **workspace_id_request_body** | [**WorkspaceIdRequestBody**](WorkspaceIdRequestBody.md) |  | [required] |
+
+### Return type
+
+[**crate::models::WorkspaceRead**](WorkspaceRead.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## get_workspace_by_connection_id
+
+> crate::models::WorkspaceRead get_workspace_by_connection_id(connection_id_request_body)
+Find workspace by connection id
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**connection_id_request_body** | [**ConnectionIdRequestBody**](ConnectionIdRequestBody.md) |  | [required] |
 
 ### Return type
 

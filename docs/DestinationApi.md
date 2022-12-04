@@ -74,7 +74,7 @@ No authorization required
 
 ## clone_destination
 
-> crate::models::DestinationRead clone_destination(destination_id_request_body)
+> crate::models::DestinationRead clone_destination(destination_clone_request_body)
 Clone destination
 
 ### Parameters
@@ -82,7 +82,7 @@ Clone destination
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**destination_id_request_body** | [**DestinationIdRequestBody**](DestinationIdRequestBody.md) |  | [required] |
+**destination_clone_request_body** | [**DestinationCloneRequestBody**](DestinationCloneRequestBody.md) |  | [required] |
 
 ### Return type
 

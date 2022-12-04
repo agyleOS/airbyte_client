@@ -11,14 +11,14 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct CustomSourceDefinitionCreate {
     #[serde(rename = "workspaceId")]
-    pub workspace_id: String,
+    pub workspace_id: uuid::Uuid,
     #[serde(rename = "sourceDefinition")]
     pub source_definition: Box<crate::models::SourceDefinitionCreate>,
 }
 
 impl CustomSourceDefinitionCreate {
     pub fn new(
-        workspace_id: String,
+        workspace_id: uuid::Uuid,
         source_definition: crate::models::SourceDefinitionCreate,
     ) -> CustomSourceDefinitionCreate {
         CustomSourceDefinitionCreate {

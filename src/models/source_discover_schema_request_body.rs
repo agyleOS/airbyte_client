@@ -11,15 +11,18 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct SourceDiscoverSchemaRequestBody {
     #[serde(rename = "sourceId")]
-    pub source_id: String,
+    pub source_id: uuid::Uuid,
+    #[serde(rename = "connectionId", skip_serializing_if = "Option::is_none")]
+    pub connection_id: Option<uuid::Uuid>,
     #[serde(rename = "disable_cache", skip_serializing_if = "Option::is_none")]
     pub disable_cache: Option<bool>,
 }
 
 impl SourceDiscoverSchemaRequestBody {
-    pub fn new(source_id: String) -> SourceDiscoverSchemaRequestBody {
+    pub fn new(source_id: uuid::Uuid) -> SourceDiscoverSchemaRequestBody {
         SourceDiscoverSchemaRequestBody {
             source_id,
+            connection_id: None,
             disable_cache: None,
         }
     }

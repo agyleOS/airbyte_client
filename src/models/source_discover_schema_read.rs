@@ -17,7 +17,13 @@ pub struct SourceDiscoverSchemaRead {
     #[serde(rename = "jobInfo")]
     pub job_info: Box<crate::models::SynchronousJobRead>,
     #[serde(rename = "catalogId", skip_serializing_if = "Option::is_none")]
-    pub catalog_id: Option<String>,
+    pub catalog_id: Option<uuid::Uuid>,
+    #[serde(rename = "catalogDiff", skip_serializing_if = "Option::is_none")]
+    pub catalog_diff: Option<Box<crate::models::CatalogDiff>>,
+    #[serde(rename = "breakingChange", skip_serializing_if = "Option::is_none")]
+    pub breaking_change: Option<bool>,
+    #[serde(rename = "connectionStatus", skip_serializing_if = "Option::is_none")]
+    pub connection_status: Option<crate::models::ConnectionStatus>,
 }
 
 impl SourceDiscoverSchemaRead {
@@ -27,6 +33,9 @@ impl SourceDiscoverSchemaRead {
             catalog: None,
             job_info: Box::new(job_info),
             catalog_id: None,
+            catalog_diff: None,
+            breaking_change: None,
+            connection_status: None,
         }
     }
 }

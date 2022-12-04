@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**workspace_id** | **String** |  | 
-**customer_id** | **String** |  | 
+**workspace_id** | [**uuid::Uuid**](uuid::Uuid.md) |  | 
+**customer_id** | [**uuid::Uuid**](uuid::Uuid.md) |  | 
 **email** | Option<**String**> |  | [optional]
 **name** | **String** |  | 
 **slug** | **String** |  | 
@@ -17,6 +17,8 @@ Name | Type | Description | Notes
 **notifications** | Option<[**Vec<crate::models::Notification>**](Notification.md)> |  | [optional]
 **first_completed_sync** | Option<**bool**> |  | [optional]
 **feedback_done** | Option<**bool**> |  | [optional]
+**default_geography** | Option<[**crate::models::Geography**](Geography.md)> |  | [optional]
+**webhook_configs** | Option<[**Vec<crate::models::WebhookConfigRead>**](WebhookConfigRead.md)> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

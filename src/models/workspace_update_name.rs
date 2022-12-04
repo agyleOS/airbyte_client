@@ -11,13 +11,13 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct WorkspaceUpdateName {
     #[serde(rename = "workspaceId")]
-    pub workspace_id: String,
+    pub workspace_id: uuid::Uuid,
     #[serde(rename = "name")]
     pub name: String,
 }
 
 impl WorkspaceUpdateName {
-    pub fn new(workspace_id: String, name: String) -> WorkspaceUpdateName {
+    pub fn new(workspace_id: uuid::Uuid, name: String) -> WorkspaceUpdateName {
         WorkspaceUpdateName { workspace_id, name }
     }
 }

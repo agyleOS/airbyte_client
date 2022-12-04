@@ -14,17 +14,19 @@ pub struct DestinationSearch {
         rename = "destinationDefinitionId",
         skip_serializing_if = "Option::is_none"
     )]
-    pub destination_definition_id: Option<String>,
+    pub destination_definition_id: Option<uuid::Uuid>,
     #[serde(rename = "destinationId", skip_serializing_if = "Option::is_none")]
-    pub destination_id: Option<String>,
+    pub destination_id: Option<uuid::Uuid>,
     #[serde(rename = "workspaceId", skip_serializing_if = "Option::is_none")]
-    pub workspace_id: Option<String>,
+    pub workspace_id: Option<uuid::Uuid>,
     /// The values required to configure the destination. The schema for this must match the schema return by destination_definition_specifications/get for the destinationDefinition.
     #[serde(
         rename = "connectionConfiguration",
+        default,
+        with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub connection_configuration: Option<serde_json::Value>,
+    pub connection_configuration: Option<Option<serde_json::Value>>,
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
     #[serde(rename = "destinationName", skip_serializing_if = "Option::is_none")]

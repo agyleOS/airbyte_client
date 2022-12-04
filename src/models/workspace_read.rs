@@ -11,9 +11,9 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct WorkspaceRead {
     #[serde(rename = "workspaceId")]
-    pub workspace_id: String,
+    pub workspace_id: uuid::Uuid,
     #[serde(rename = "customerId")]
-    pub customer_id: String,
+    pub customer_id: uuid::Uuid,
     #[serde(rename = "email", skip_serializing_if = "Option::is_none")]
     pub email: Option<String>,
     #[serde(rename = "name")]
@@ -39,12 +39,16 @@ pub struct WorkspaceRead {
     pub first_completed_sync: Option<bool>,
     #[serde(rename = "feedbackDone", skip_serializing_if = "Option::is_none")]
     pub feedback_done: Option<bool>,
+    #[serde(rename = "defaultGeography", skip_serializing_if = "Option::is_none")]
+    pub default_geography: Option<crate::models::Geography>,
+    #[serde(rename = "webhookConfigs", skip_serializing_if = "Option::is_none")]
+    pub webhook_configs: Option<Vec<crate::models::WebhookConfigRead>>,
 }
 
 impl WorkspaceRead {
     pub fn new(
-        workspace_id: String,
-        customer_id: String,
+        workspace_id: uuid::Uuid,
+        customer_id: uuid::Uuid,
         name: String,
         slug: String,
         initial_setup_complete: bool,
@@ -63,6 +67,8 @@ impl WorkspaceRead {
             notifications: None,
             first_completed_sync: None,
             feedback_done: None,
+            default_geography: None,
+            webhook_configs: None,
         }
     }
 }

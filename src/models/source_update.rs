@@ -11,9 +11,12 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct SourceUpdate {
     #[serde(rename = "sourceId")]
-    pub source_id: String,
+    pub source_id: uuid::Uuid,
     /// The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source.
-    #[serde(rename = "connectionConfiguration")]
+    #[serde(
+        rename = "connectionConfiguration",
+        deserialize_with = "Option::deserialize"
+    )]
     pub connection_configuration: Option<serde_json::Value>,
     #[serde(rename = "name")]
     pub name: String,
@@ -21,7 +24,7 @@ pub struct SourceUpdate {
 
 impl SourceUpdate {
     pub fn new(
-        source_id: String,
+        source_id: uuid::Uuid,
         connection_configuration: Option<serde_json::Value>,
         name: String,
     ) -> SourceUpdate {

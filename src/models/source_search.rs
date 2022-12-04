@@ -11,17 +11,19 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct SourceSearch {
     #[serde(rename = "sourceDefinitionId", skip_serializing_if = "Option::is_none")]
-    pub source_definition_id: Option<String>,
+    pub source_definition_id: Option<uuid::Uuid>,
     #[serde(rename = "sourceId", skip_serializing_if = "Option::is_none")]
-    pub source_id: Option<String>,
+    pub source_id: Option<uuid::Uuid>,
     #[serde(rename = "workspaceId", skip_serializing_if = "Option::is_none")]
-    pub workspace_id: Option<String>,
+    pub workspace_id: Option<uuid::Uuid>,
     /// The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source.
     #[serde(
         rename = "connectionConfiguration",
+        default,
+        with = "::serde_with::rust::double_option",
         skip_serializing_if = "Option::is_none"
     )]
-    pub connection_configuration: Option<serde_json::Value>,
+    pub connection_configuration: Option<Option<serde_json::Value>>,
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
     #[serde(rename = "sourceName", skip_serializing_if = "Option::is_none")]

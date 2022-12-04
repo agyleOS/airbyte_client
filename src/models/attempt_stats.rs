@@ -21,6 +21,10 @@ pub struct AttemptStats {
     pub state_messages_emitted: Option<i64>,
     #[serde(rename = "recordsCommitted", skip_serializing_if = "Option::is_none")]
     pub records_committed: Option<i64>,
+    #[serde(rename = "estimatedRecords", skip_serializing_if = "Option::is_none")]
+    pub estimated_records: Option<i64>,
+    #[serde(rename = "estimatedBytes", skip_serializing_if = "Option::is_none")]
+    pub estimated_bytes: Option<i64>,
 }
 
 impl AttemptStats {
@@ -30,6 +34,8 @@ impl AttemptStats {
             bytes_emitted: None,
             state_messages_emitted: None,
             records_committed: None,
+            estimated_records: None,
+            estimated_bytes: None,
         }
     }
 }

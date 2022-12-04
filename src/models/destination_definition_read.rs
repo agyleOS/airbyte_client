@@ -11,7 +11,7 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct DestinationDefinitionRead {
     #[serde(rename = "destinationDefinitionId")]
-    pub destination_definition_id: String,
+    pub destination_definition_id: uuid::Uuid,
     #[serde(rename = "name")]
     pub name: String,
     #[serde(rename = "dockerRepository")]
@@ -22,6 +22,9 @@ pub struct DestinationDefinitionRead {
     pub documentation_url: String,
     #[serde(rename = "icon", skip_serializing_if = "Option::is_none")]
     pub icon: Option<String>,
+    /// The Airbyte Protocol version supported by the connector
+    #[serde(rename = "protocolVersion", skip_serializing_if = "Option::is_none")]
+    pub protocol_version: Option<String>,
     #[serde(rename = "releaseStage", skip_serializing_if = "Option::is_none")]
     pub release_stage: Option<crate::models::ReleaseStage>,
     /// The date when this connector was first released, in yyyy-mm-dd format.
@@ -36,7 +39,7 @@ pub struct DestinationDefinitionRead {
 
 impl DestinationDefinitionRead {
     pub fn new(
-        destination_definition_id: String,
+        destination_definition_id: uuid::Uuid,
         name: String,
         docker_repository: String,
         docker_image_tag: String,
@@ -49,6 +52,7 @@ impl DestinationDefinitionRead {
             docker_image_tag,
             documentation_url,
             icon: None,
+            protocol_version: None,
             release_stage: None,
             release_date: None,
             resource_requirements: None,

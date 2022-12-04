@@ -14,6 +14,8 @@ pub struct JobDebugInfoRead {
     pub job: Box<crate::models::JobDebugRead>,
     #[serde(rename = "attempts")]
     pub attempts: Vec<crate::models::AttemptInfoRead>,
+    #[serde(rename = "workflowState", skip_serializing_if = "Option::is_none")]
+    pub workflow_state: Option<Box<crate::models::WorkflowStateRead>>,
 }
 
 impl JobDebugInfoRead {
@@ -24,6 +26,7 @@ impl JobDebugInfoRead {
         JobDebugInfoRead {
             job: Box::new(job),
             attempts,
+            workflow_state: None,
         }
     }
 }

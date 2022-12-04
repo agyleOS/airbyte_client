@@ -14,8 +14,10 @@ pub struct JobListRequestBody {
     pub config_types: Vec<crate::models::JobConfigType>,
     #[serde(rename = "configId")]
     pub config_id: String,
+    #[serde(rename = "includingJobId", skip_serializing_if = "Option::is_none")]
+    pub including_job_id: Option<i64>,
     #[serde(rename = "pagination", skip_serializing_if = "Option::is_none")]
-    pub pagination: Option<crate::models::Pagination>,
+    pub pagination: Option<Box<crate::models::Pagination>>,
 }
 
 impl JobListRequestBody {
@@ -26,6 +28,7 @@ impl JobListRequestBody {
         JobListRequestBody {
             config_types,
             config_id,
+            including_job_id: None,
             pagination: None,
         }
     }

@@ -15,18 +15,18 @@ pub struct JobTypeResourceLimit {
     #[serde(rename = "jobType")]
     pub job_type: crate::models::JobType,
     #[serde(rename = "resourceRequirements")]
-    pub resource_requirements: Option<crate::models::ResourceRequirements>,
+    pub resource_requirements: Box<crate::models::ResourceRequirements>,
 }
 
 impl JobTypeResourceLimit {
     /// sets resource requirements for a specific job type for an actor definition. these values override the default, if both are set.
     pub fn new(
         job_type: crate::models::JobType,
-        resource_requirements: Option<crate::models::ResourceRequirements>,
+        resource_requirements: crate::models::ResourceRequirements,
     ) -> JobTypeResourceLimit {
         JobTypeResourceLimit {
             job_type,
-            resource_requirements,
+            resource_requirements: Box::new(resource_requirements),
         }
     }
 }

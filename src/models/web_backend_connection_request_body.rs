@@ -16,11 +16,11 @@ pub struct WebBackendConnectionRequestBody {
     )]
     pub with_refreshed_catalog: Option<bool>,
     #[serde(rename = "connectionId")]
-    pub connection_id: String,
+    pub connection_id: uuid::Uuid,
 }
 
 impl WebBackendConnectionRequestBody {
-    pub fn new(connection_id: String) -> WebBackendConnectionRequestBody {
+    pub fn new(connection_id: uuid::Uuid) -> WebBackendConnectionRequestBody {
         WebBackendConnectionRequestBody {
             with_refreshed_catalog: None,
             connection_id,

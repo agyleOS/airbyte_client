@@ -11,7 +11,7 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct ConnectionSearch {
     #[serde(rename = "connectionId", skip_serializing_if = "Option::is_none")]
-    pub connection_id: Option<String>,
+    pub connection_id: Option<uuid::Uuid>,
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
     #[serde(
@@ -26,11 +26,15 @@ pub struct ConnectionSearch {
     #[serde(rename = "prefix", skip_serializing_if = "Option::is_none")]
     pub prefix: Option<String>,
     #[serde(rename = "sourceId", skip_serializing_if = "Option::is_none")]
-    pub source_id: Option<String>,
+    pub source_id: Option<uuid::Uuid>,
     #[serde(rename = "destinationId", skip_serializing_if = "Option::is_none")]
-    pub destination_id: Option<String>,
+    pub destination_id: Option<uuid::Uuid>,
     #[serde(rename = "schedule", skip_serializing_if = "Option::is_none")]
     pub schedule: Option<Box<crate::models::ConnectionSchedule>>,
+    #[serde(rename = "scheduleType", skip_serializing_if = "Option::is_none")]
+    pub schedule_type: Option<crate::models::ConnectionScheduleType>,
+    #[serde(rename = "scheduleData", skip_serializing_if = "Option::is_none")]
+    pub schedule_data: Option<Box<crate::models::ConnectionScheduleData>>,
     #[serde(rename = "status", skip_serializing_if = "Option::is_none")]
     pub status: Option<crate::models::ConnectionStatus>,
     #[serde(rename = "source", skip_serializing_if = "Option::is_none")]
@@ -50,6 +54,8 @@ impl ConnectionSearch {
             source_id: None,
             destination_id: None,
             schedule: None,
+            schedule_type: None,
+            schedule_data: None,
             status: None,
             source: None,
             destination: None,

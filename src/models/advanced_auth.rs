@@ -40,13 +40,13 @@ impl AdvancedAuth {
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 pub enum AuthFlowType {
     #[serde(rename = "oauth2.0")]
-    Oauth20,
+    Oauth2Period0,
     #[serde(rename = "oauth1.0")]
-    Oauth10,
+    Oauth1Period0,
 }
 
 impl Default for AuthFlowType {
     fn default() -> AuthFlowType {
-        Self::Oauth20
+        Self::Oauth2Period0
     }
 }

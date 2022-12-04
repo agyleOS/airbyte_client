@@ -11,9 +11,9 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct OperationRead {
     #[serde(rename = "workspaceId")]
-    pub workspace_id: String,
+    pub workspace_id: uuid::Uuid,
     #[serde(rename = "operationId")]
-    pub operation_id: String,
+    pub operation_id: uuid::Uuid,
     #[serde(rename = "name")]
     pub name: String,
     #[serde(rename = "operatorConfiguration")]
@@ -22,8 +22,8 @@ pub struct OperationRead {
 
 impl OperationRead {
     pub fn new(
-        workspace_id: String,
-        operation_id: String,
+        workspace_id: uuid::Uuid,
+        operation_id: uuid::Uuid,
         name: String,
         operator_configuration: crate::models::OperatorConfiguration,
     ) -> OperationRead {

@@ -11,11 +11,11 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct DestinationIdRequestBody {
     #[serde(rename = "destinationId")]
-    pub destination_id: String,
+    pub destination_id: uuid::Uuid,
 }
 
 impl DestinationIdRequestBody {
-    pub fn new(destination_id: String) -> DestinationIdRequestBody {
+    pub fn new(destination_id: uuid::Uuid) -> DestinationIdRequestBody {
         DestinationIdRequestBody { destination_id }
     }
 }

@@ -11,7 +11,7 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct OperationCreate {
     #[serde(rename = "workspaceId")]
-    pub workspace_id: String,
+    pub workspace_id: uuid::Uuid,
     #[serde(rename = "name")]
     pub name: String,
     #[serde(rename = "operatorConfiguration")]
@@ -20,7 +20,7 @@ pub struct OperationCreate {
 
 impl OperationCreate {
     pub fn new(
-        workspace_id: String,
+        workspace_id: uuid::Uuid,
         name: String,
         operator_configuration: crate::models::OperatorConfiguration,
     ) -> OperationCreate {

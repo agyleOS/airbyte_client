@@ -11,11 +11,11 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct SourceDefinitionIdRequestBody {
     #[serde(rename = "sourceDefinitionId")]
-    pub source_definition_id: String,
+    pub source_definition_id: uuid::Uuid,
 }
 
 impl SourceDefinitionIdRequestBody {
-    pub fn new(source_definition_id: String) -> SourceDefinitionIdRequestBody {
+    pub fn new(source_definition_id: uuid::Uuid) -> SourceDefinitionIdRequestBody {
         SourceDefinitionIdRequestBody {
             source_definition_id,
         }

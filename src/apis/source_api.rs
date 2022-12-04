@@ -185,7 +185,7 @@ pub async fn check_connection_to_source_for_update(
 
 pub async fn clone_source(
     configuration: &configuration::Configuration,
-    source_id_request_body: crate::models::SourceIdRequestBody,
+    source_clone_request_body: crate::models::SourceCloneRequestBody,
 ) -> Result<crate::models::SourceRead, Error<CloneSourceError>> {
     let local_var_configuration = configuration;
 
@@ -199,7 +199,7 @@ pub async fn clone_source(
         local_var_req_builder =
             local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
-    local_var_req_builder = local_var_req_builder.json(&source_id_request_body);
+    local_var_req_builder = local_var_req_builder.json(&source_clone_request_body);
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;

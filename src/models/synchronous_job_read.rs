@@ -11,7 +11,7 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct SynchronousJobRead {
     #[serde(rename = "id")]
-    pub id: String,
+    pub id: uuid::Uuid,
     #[serde(rename = "configType")]
     pub config_type: crate::models::JobConfigType,
     /// only present if a config id was provided.
@@ -29,7 +29,7 @@ pub struct SynchronousJobRead {
 
 impl SynchronousJobRead {
     pub fn new(
-        id: String,
+        id: uuid::Uuid,
         config_type: crate::models::JobConfigType,
         created_at: i64,
         ended_at: i64,

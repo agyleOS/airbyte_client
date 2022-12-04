@@ -27,6 +27,10 @@ pub struct WorkspaceCreate {
     pub notifications: Option<Vec<crate::models::Notification>>,
     #[serde(rename = "displaySetupWizard", skip_serializing_if = "Option::is_none")]
     pub display_setup_wizard: Option<bool>,
+    #[serde(rename = "defaultGeography", skip_serializing_if = "Option::is_none")]
+    pub default_geography: Option<crate::models::Geography>,
+    #[serde(rename = "webhookConfigs", skip_serializing_if = "Option::is_none")]
+    pub webhook_configs: Option<Vec<crate::models::WebhookConfigWrite>>,
 }
 
 impl WorkspaceCreate {
@@ -39,6 +43,8 @@ impl WorkspaceCreate {
             security_updates: None,
             notifications: None,
             display_setup_wizard: None,
+            default_geography: None,
+            webhook_configs: None,
         }
     }
 }

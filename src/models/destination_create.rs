@@ -11,21 +11,24 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct DestinationCreate {
     #[serde(rename = "workspaceId")]
-    pub workspace_id: String,
+    pub workspace_id: uuid::Uuid,
     #[serde(rename = "name")]
     pub name: String,
     #[serde(rename = "destinationDefinitionId")]
-    pub destination_definition_id: String,
+    pub destination_definition_id: uuid::Uuid,
     /// The values required to configure the destination. The schema for this must match the schema return by destination_definition_specifications/get for the destinationDefinition.
-    #[serde(rename = "connectionConfiguration")]
+    #[serde(
+        rename = "connectionConfiguration",
+        deserialize_with = "Option::deserialize"
+    )]
     pub connection_configuration: Option<serde_json::Value>,
 }
 
 impl DestinationCreate {
     pub fn new(
-        workspace_id: String,
+        workspace_id: uuid::Uuid,
         name: String,
-        destination_definition_id: String,
+        destination_definition_id: uuid::Uuid,
         connection_configuration: Option<serde_json::Value>,
     ) -> DestinationCreate {
         DestinationCreate {

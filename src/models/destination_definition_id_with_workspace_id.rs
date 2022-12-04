@@ -11,15 +11,15 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct DestinationDefinitionIdWithWorkspaceId {
     #[serde(rename = "destinationDefinitionId")]
-    pub destination_definition_id: String,
+    pub destination_definition_id: uuid::Uuid,
     #[serde(rename = "workspaceId")]
-    pub workspace_id: String,
+    pub workspace_id: uuid::Uuid,
 }
 
 impl DestinationDefinitionIdWithWorkspaceId {
     pub fn new(
-        destination_definition_id: String,
-        workspace_id: String,
+        destination_definition_id: uuid::Uuid,
+        workspace_id: uuid::Uuid,
     ) -> DestinationDefinitionIdWithWorkspaceId {
         DestinationDefinitionIdWithWorkspaceId {
             destination_definition_id,

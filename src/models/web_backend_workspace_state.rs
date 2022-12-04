@@ -11,11 +11,11 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct WebBackendWorkspaceState {
     #[serde(rename = "workspaceId")]
-    pub workspace_id: String,
+    pub workspace_id: uuid::Uuid,
 }
 
 impl WebBackendWorkspaceState {
-    pub fn new(workspace_id: String) -> WebBackendWorkspaceState {
+    pub fn new(workspace_id: uuid::Uuid) -> WebBackendWorkspaceState {
         WebBackendWorkspaceState { workspace_id }
     }
 }

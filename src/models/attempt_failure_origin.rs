@@ -25,6 +25,8 @@ pub enum AttemptFailureOrigin {
     Normalization,
     #[serde(rename = "dbt")]
     Dbt,
+    #[serde(rename = "airbyte_platform")]
+    AirbytePlatform,
 }
 
 impl ToString for AttemptFailureOrigin {
@@ -36,6 +38,7 @@ impl ToString for AttemptFailureOrigin {
             Self::Persistence => String::from("persistence"),
             Self::Normalization => String::from("normalization"),
             Self::Dbt => String::from("dbt"),
+            Self::AirbytePlatform => String::from("airbyte_platform"),
         }
     }
 }

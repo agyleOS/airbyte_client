@@ -11,21 +11,24 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct SourceCreate {
     #[serde(rename = "sourceDefinitionId")]
-    pub source_definition_id: String,
+    pub source_definition_id: uuid::Uuid,
     /// The values required to configure the source. The schema for this must match the schema return by source_definition_specifications/get for the source.
-    #[serde(rename = "connectionConfiguration")]
+    #[serde(
+        rename = "connectionConfiguration",
+        deserialize_with = "Option::deserialize"
+    )]
     pub connection_configuration: Option<serde_json::Value>,
     #[serde(rename = "workspaceId")]
-    pub workspace_id: String,
+    pub workspace_id: uuid::Uuid,
     #[serde(rename = "name")]
     pub name: String,
 }
 
 impl SourceCreate {
     pub fn new(
-        source_definition_id: String,
+        source_definition_id: uuid::Uuid,
         connection_configuration: Option<serde_json::Value>,
-        workspace_id: String,
+        workspace_id: uuid::Uuid,
         name: String,
     ) -> SourceCreate {
         SourceCreate {

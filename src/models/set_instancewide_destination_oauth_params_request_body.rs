@@ -11,14 +11,14 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct SetInstancewideDestinationOauthParamsRequestBody {
     #[serde(rename = "destinationDefinitionId")]
-    pub destination_definition_id: String,
+    pub destination_definition_id: uuid::Uuid,
     #[serde(rename = "params")]
     pub params: ::std::collections::HashMap<String, serde_json::Value>,
 }
 
 impl SetInstancewideDestinationOauthParamsRequestBody {
     pub fn new(
-        destination_definition_id: String,
+        destination_definition_id: uuid::Uuid,
         params: ::std::collections::HashMap<String, serde_json::Value>,
     ) -> SetInstancewideDestinationOauthParamsRequestBody {
         SetInstancewideDestinationOauthParamsRequestBody {

@@ -75,7 +75,7 @@ No authorization required
 
 ## clone_source
 
-> crate::models::SourceRead clone_source(source_id_request_body)
+> crate::models::SourceRead clone_source(source_clone_request_body)
 Clone source
 
 ### Parameters
@@ -83,7 +83,7 @@ Clone source
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**source_id_request_body** | [**SourceIdRequestBody**](SourceIdRequestBody.md) |  | [required] |
+**source_clone_request_body** | [**SourceCloneRequestBody**](SourceCloneRequestBody.md) |  | [required] |
 
 ### Return type
 

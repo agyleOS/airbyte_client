@@ -13,7 +13,7 @@ pub struct UploadRead {
     #[serde(rename = "status")]
     pub status: Status,
     #[serde(rename = "resourceId", skip_serializing_if = "Option::is_none")]
-    pub resource_id: Option<String>,
+    pub resource_id: Option<uuid::Uuid>,
 }
 
 impl UploadRead {

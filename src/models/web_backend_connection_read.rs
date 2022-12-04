@@ -11,7 +11,7 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct WebBackendConnectionRead {
     #[serde(rename = "connectionId")]
-    pub connection_id: String,
+    pub connection_id: uuid::Uuid,
     #[serde(rename = "name")]
     pub name: String,
     #[serde(
@@ -26,17 +26,21 @@ pub struct WebBackendConnectionRead {
     #[serde(rename = "prefix", skip_serializing_if = "Option::is_none")]
     pub prefix: Option<String>,
     #[serde(rename = "sourceId")]
-    pub source_id: String,
+    pub source_id: uuid::Uuid,
     #[serde(rename = "destinationId")]
-    pub destination_id: String,
+    pub destination_id: uuid::Uuid,
     #[serde(rename = "syncCatalog")]
     pub sync_catalog: Box<crate::models::AirbyteCatalog>,
     #[serde(rename = "schedule", skip_serializing_if = "Option::is_none")]
     pub schedule: Option<Box<crate::models::ConnectionSchedule>>,
+    #[serde(rename = "scheduleType", skip_serializing_if = "Option::is_none")]
+    pub schedule_type: Option<crate::models::ConnectionScheduleType>,
+    #[serde(rename = "scheduleData", skip_serializing_if = "Option::is_none")]
+    pub schedule_data: Option<Box<crate::models::ConnectionScheduleData>>,
     #[serde(rename = "status")]
     pub status: crate::models::ConnectionStatus,
     #[serde(rename = "operationIds", skip_serializing_if = "Option::is_none")]
-    pub operation_ids: Option<Vec<String>>,
+    pub operation_ids: Option<Vec<uuid::Uuid>>,
     #[serde(rename = "source")]
     pub source: Box<crate::models::SourceRead>,
     #[serde(rename = "destination")]
@@ -61,19 +65,34 @@ pub struct WebBackendConnectionRead {
         skip_serializing_if = "Option::is_none"
     )]
     pub resource_requirements: Option<Box<crate::models::ResourceRequirements>>,
+    #[serde(rename = "catalogId", skip_serializing_if = "Option::is_none")]
+    pub catalog_id: Option<uuid::Uuid>,
+    #[serde(rename = "catalogDiff", skip_serializing_if = "Option::is_none")]
+    pub catalog_diff: Option<Box<crate::models::CatalogDiff>>,
+    #[serde(rename = "geography", skip_serializing_if = "Option::is_none")]
+    pub geography: Option<crate::models::Geography>,
+    #[serde(rename = "schemaChange")]
+    pub schema_change: crate::models::SchemaChange,
+    #[serde(rename = "notifySchemaChanges")]
+    pub notify_schema_changes: bool,
+    #[serde(rename = "nonBreakingChangesPreference")]
+    pub non_breaking_changes_preference: crate::models::NonBreakingChangesPreference,
 }
 
 impl WebBackendConnectionRead {
     pub fn new(
-        connection_id: String,
+        connection_id: uuid::Uuid,
         name: String,
-        source_id: String,
-        destination_id: String,
+        source_id: uuid::Uuid,
+        destination_id: uuid::Uuid,
         sync_catalog: crate::models::AirbyteCatalog,
         status: crate::models::ConnectionStatus,
         source: crate::models::SourceRead,
         destination: crate::models::DestinationRead,
         is_syncing: bool,
+        schema_change: crate::models::SchemaChange,
+        notify_schema_changes: bool,
+        non_breaking_changes_preference: crate::models::NonBreakingChangesPreference,
     ) -> WebBackendConnectionRead {
         WebBackendConnectionRead {
             connection_id,
@@ -85,6 +104,8 @@ impl WebBackendConnectionRead {
             destination_id,
             sync_catalog: Box::new(sync_catalog),
             schedule: None,
+            schedule_type: None,
+            schedule_data: None,
             status,
             operation_ids: None,
             source: Box::new(source),
@@ -94,6 +115,12 @@ impl WebBackendConnectionRead {
             latest_sync_job_status: None,
             is_syncing,
             resource_requirements: None,
+            catalog_id: None,
+            catalog_diff: None,
+            geography: None,
+            schema_change,
+            notify_schema_changes,
+            non_breaking_changes_preference,
         }
     }
 }

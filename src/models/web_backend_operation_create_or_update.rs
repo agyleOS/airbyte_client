@@ -11,9 +11,9 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct WebBackendOperationCreateOrUpdate {
     #[serde(rename = "operationId", skip_serializing_if = "Option::is_none")]
-    pub operation_id: Option<String>,
+    pub operation_id: Option<uuid::Uuid>,
     #[serde(rename = "workspaceId")]
-    pub workspace_id: String,
+    pub workspace_id: uuid::Uuid,
     #[serde(rename = "name")]
     pub name: String,
     #[serde(rename = "operatorConfiguration")]
@@ -22,7 +22,7 @@ pub struct WebBackendOperationCreateOrUpdate {
 
 impl WebBackendOperationCreateOrUpdate {
     pub fn new(
-        workspace_id: String,
+        workspace_id: uuid::Uuid,
         name: String,
         operator_configuration: crate::models::OperatorConfiguration,
     ) -> WebBackendOperationCreateOrUpdate {

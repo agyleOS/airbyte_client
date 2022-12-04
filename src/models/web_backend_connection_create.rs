@@ -25,15 +25,19 @@ pub struct WebBackendConnectionCreate {
     #[serde(rename = "prefix", skip_serializing_if = "Option::is_none")]
     pub prefix: Option<String>,
     #[serde(rename = "sourceId")]
-    pub source_id: String,
+    pub source_id: uuid::Uuid,
     #[serde(rename = "destinationId")]
-    pub destination_id: String,
+    pub destination_id: uuid::Uuid,
     #[serde(rename = "operationIds", skip_serializing_if = "Option::is_none")]
-    pub operation_ids: Option<Vec<String>>,
+    pub operation_ids: Option<Vec<uuid::Uuid>>,
     #[serde(rename = "syncCatalog", skip_serializing_if = "Option::is_none")]
     pub sync_catalog: Option<Box<crate::models::AirbyteCatalog>>,
     #[serde(rename = "schedule", skip_serializing_if = "Option::is_none")]
     pub schedule: Option<Box<crate::models::ConnectionSchedule>>,
+    #[serde(rename = "scheduleType", skip_serializing_if = "Option::is_none")]
+    pub schedule_type: Option<crate::models::ConnectionScheduleType>,
+    #[serde(rename = "scheduleData", skip_serializing_if = "Option::is_none")]
+    pub schedule_data: Option<Box<crate::models::ConnectionScheduleData>>,
     #[serde(rename = "status")]
     pub status: crate::models::ConnectionStatus,
     #[serde(
@@ -44,13 +48,20 @@ pub struct WebBackendConnectionCreate {
     #[serde(rename = "operations", skip_serializing_if = "Option::is_none")]
     pub operations: Option<Vec<crate::models::OperationCreate>>,
     #[serde(rename = "sourceCatalogId", skip_serializing_if = "Option::is_none")]
-    pub source_catalog_id: Option<String>,
+    pub source_catalog_id: Option<uuid::Uuid>,
+    #[serde(rename = "geography", skip_serializing_if = "Option::is_none")]
+    pub geography: Option<crate::models::Geography>,
+    #[serde(
+        rename = "nonBreakingChangesPreference",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub non_breaking_changes_preference: Option<crate::models::NonBreakingChangesPreference>,
 }
 
 impl WebBackendConnectionCreate {
     pub fn new(
-        source_id: String,
-        destination_id: String,
+        source_id: uuid::Uuid,
+        destination_id: uuid::Uuid,
         status: crate::models::ConnectionStatus,
     ) -> WebBackendConnectionCreate {
         WebBackendConnectionCreate {
@@ -63,10 +74,14 @@ impl WebBackendConnectionCreate {
             operation_ids: None,
             sync_catalog: None,
             schedule: None,
+            schedule_type: None,
+            schedule_data: None,
             status,
             resource_requirements: None,
             operations: None,
             source_catalog_id: None,
+            geography: None,
+            non_breaking_changes_preference: None,
         }
     }
 }
