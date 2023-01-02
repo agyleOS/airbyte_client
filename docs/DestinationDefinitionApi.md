@@ -5,8 +5,6 @@ All URIs are relative to *http://localhost:8000/api*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**create_custom_destination_definition**](DestinationDefinitionApi.md#create_custom_destination_definition) | **POST** /v1/destination_definitions/create_custom | Creates a custom destinationDefinition for the given workspace
-[**create_destination_definition**](DestinationDefinitionApi.md#create_destination_definition) | **POST** /v1/destination_definitions/create | Creates a destinationsDefinition
-[**delete_custom_destination_definition**](DestinationDefinitionApi.md#delete_custom_destination_definition) | **POST** /v1/destination_definitions/delete_custom | Delete a custom destination definition for the given workspace
 [**delete_destination_definition**](DestinationDefinitionApi.md#delete_destination_definition) | **POST** /v1/destination_definitions/delete | Delete a destination definition
 [**get_destination_definition**](DestinationDefinitionApi.md#get_destination_definition) | **POST** /v1/destination_definitions/get | Get destinationDefinition
 [**get_destination_definition_for_workspace**](DestinationDefinitionApi.md#get_destination_definition_for_workspace) | **POST** /v1/destination_definitions/get_for_workspace | Get a destinationDefinition that is configured for the given workspace
@@ -16,7 +14,6 @@ Method | HTTP request | Description
 [**list_latest_destination_definitions**](DestinationDefinitionApi.md#list_latest_destination_definitions) | **POST** /v1/destination_definitions/list_latest | List the latest destinationDefinitions Airbyte supports
 [**list_private_destination_definitions**](DestinationDefinitionApi.md#list_private_destination_definitions) | **POST** /v1/destination_definitions/list_private | List all private, non-custom destinationDefinitions, and for each indicate whether the given workspace has a grant for using the definition. Used by admins to view and modify a given workspace's grants.
 [**revoke_destination_definition_from_workspace**](DestinationDefinitionApi.md#revoke_destination_definition_from_workspace) | **POST** /v1/destination_definitions/revoke_definition | revoke a grant to a private, non-custom destinationDefinition from a given workspace
-[**update_custom_destination_definition**](DestinationDefinitionApi.md#update_custom_destination_definition) | **POST** /v1/destination_definitions/update_custom | Update a custom destinationDefinition for the given workspace
 [**update_destination_definition**](DestinationDefinitionApi.md#update_destination_definition) | **POST** /v1/destination_definitions/update | Update destinationDefinition
 
 
@@ -36,62 +33,6 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**crate::models::DestinationDefinitionRead**](DestinationDefinitionRead.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-
-## create_destination_definition
-
-> crate::models::DestinationDefinitionRead create_destination_definition(destination_definition_create)
-Creates a destinationsDefinition
-
-### Parameters
-
-
-Name | Type | Description  | Required | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-**destination_definition_create** | Option<[**DestinationDefinitionCreate**](DestinationDefinitionCreate.md)> |  |  |
-
-### Return type
-
-[**crate::models::DestinationDefinitionRead**](DestinationDefinitionRead.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-
-## delete_custom_destination_definition
-
-> delete_custom_destination_definition(destination_definition_id_with_workspace_id)
-Delete a custom destination definition for the given workspace
-
-### Parameters
-
-
-Name | Type | Description  | Required | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-**destination_definition_id_with_workspace_id** | [**DestinationDefinitionIdWithWorkspaceId**](DestinationDefinitionIdWithWorkspaceId.md) |  | [required] |
-
-### Return type
-
- (empty response body)
 
 ### Authorization
 
@@ -340,34 +281,6 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
  (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-
-## update_custom_destination_definition
-
-> crate::models::DestinationDefinitionRead update_custom_destination_definition(custom_destination_definition_update)
-Update a custom destinationDefinition for the given workspace
-
-### Parameters
-
-
-Name | Type | Description  | Required | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-**custom_destination_definition_update** | Option<[**CustomDestinationDefinitionUpdate**](CustomDestinationDefinitionUpdate.md)> |  |  |
-
-### Return type
-
-[**crate::models::DestinationDefinitionRead**](DestinationDefinitionRead.md)
 
 ### Authorization
 

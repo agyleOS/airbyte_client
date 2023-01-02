@@ -43,11 +43,8 @@ docs/ConnectionStateType.md
 docs/ConnectionStatus.md
 docs/ConnectionUpdate.md
 docs/CustomDestinationDefinitionCreate.md
-docs/CustomDestinationDefinitionUpdate.md
 docs/CustomSourceDefinitionCreate.md
-docs/CustomSourceDefinitionUpdate.md
 docs/DataType.md
-docs/DbMigrationApi.md
 docs/DbMigrationExecutionRead.md
 docs/DbMigrationRead.md
 docs/DbMigrationReadList.md
@@ -142,6 +139,7 @@ docs/ResourceRequirements.md
 docs/SaveStatsRequestBody.md
 docs/SchedulerApi.md
 docs/SchemaChange.md
+docs/SelectedFieldInfo.md
 docs/SetInstancewideDestinationOauthParamsRequestBody.md
 docs/SetInstancewideSourceOauthParamsRequestBody.md
 docs/SetWorkflowInAttemptRequestBody.md
@@ -178,6 +176,7 @@ docs/SyncMode.md
 docs/SynchronousJobRead.md
 docs/UploadRead.md
 docs/WebBackendApi.md
+docs/WebBackendCheckUpdatesRead.md
 docs/WebBackendConnectionCreate.md
 docs/WebBackendConnectionListItem.md
 docs/WebBackendConnectionRead.md
@@ -203,7 +202,6 @@ git_push.sh
 src/apis/attempt_api.rs
 src/apis/configuration.rs
 src/apis/connection_api.rs
-src/apis/db_migration_api.rs
 src/apis/destination_api.rs
 src/apis/destination_definition_api.rs
 src/apis/destination_definition_specification_api.rs
@@ -264,9 +262,7 @@ src/models/connection_state_type.rs
 src/models/connection_status.rs
 src/models/connection_update.rs
 src/models/custom_destination_definition_create.rs
-src/models/custom_destination_definition_update.rs
 src/models/custom_source_definition_create.rs
-src/models/custom_source_definition_update.rs
 src/models/data_type.rs
 src/models/db_migration_execution_read.rs
 src/models/db_migration_read.rs
@@ -351,6 +347,7 @@ src/models/reset_config.rs
 src/models/resource_requirements.rs
 src/models/save_stats_request_body.rs
 src/models/schema_change.rs
+src/models/selected_field_info.rs
 src/models/set_instancewide_destination_oauth_params_request_body.rs
 src/models/set_instancewide_source_oauth_params_request_body.rs
 src/models/set_workflow_in_attempt_request_body.rs
@@ -381,6 +378,7 @@ src/models/stream_transform.rs
 src/models/sync_mode.rs
 src/models/synchronous_job_read.rs
 src/models/upload_read.rs
+src/models/web_backend_check_updates_read.rs
 src/models/web_backend_connection_create.rs
 src/models/web_backend_connection_list_item.rs
 src/models/web_backend_connection_read.rs

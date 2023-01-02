@@ -5,6 +5,7 @@ All URIs are relative to *http://localhost:8000/api*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**get_state_type**](WebBackendApi.md#get_state_type) | **POST** /v1/web_backend/state/get_type | Fetch the current state type for a connection.
+[**web_backend_check_updates**](WebBackendApi.md#web_backend_check_updates) | **POST** /v1/web_backend/check_updates | Returns a summary of source and destination definitions that could be updated.
 [**web_backend_create_connection**](WebBackendApi.md#web_backend_create_connection) | **POST** /v1/web_backend/connections/create | Create a connection
 [**web_backend_get_connection**](WebBackendApi.md#web_backend_get_connection) | **POST** /v1/web_backend/connections/get | Get a connection
 [**web_backend_get_workspace_state**](WebBackendApi.md#web_backend_get_workspace_state) | **POST** /v1/web_backend/workspace/state | Returns the current state of a workspace
@@ -37,6 +38,31 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## web_backend_check_updates
+
+> crate::models::WebBackendCheckUpdatesRead web_backend_check_updates()
+Returns a summary of source and destination definitions that could be updated.
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**crate::models::WebBackendCheckUpdatesRead**](WebBackendCheckUpdatesRead.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

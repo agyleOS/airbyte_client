@@ -5,8 +5,6 @@ All URIs are relative to *http://localhost:8000/api*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**create_custom_source_definition**](SourceDefinitionApi.md#create_custom_source_definition) | **POST** /v1/source_definitions/create_custom | Creates a custom sourceDefinition for the given workspace
-[**create_source_definition**](SourceDefinitionApi.md#create_source_definition) | **POST** /v1/source_definitions/create | Creates a sourceDefinition
-[**delete_custom_source_definition**](SourceDefinitionApi.md#delete_custom_source_definition) | **POST** /v1/source_definitions/delete_custom | Delete a custom source definition for the given workspace
 [**delete_source_definition**](SourceDefinitionApi.md#delete_source_definition) | **POST** /v1/source_definitions/delete | Delete a source definition
 [**get_source_definition**](SourceDefinitionApi.md#get_source_definition) | **POST** /v1/source_definitions/get | Get source
 [**get_source_definition_for_workspace**](SourceDefinitionApi.md#get_source_definition_for_workspace) | **POST** /v1/source_definitions/get_for_workspace | Get a sourceDefinition that is configured for the given workspace
@@ -16,7 +14,6 @@ Method | HTTP request | Description
 [**list_source_definitions**](SourceDefinitionApi.md#list_source_definitions) | **POST** /v1/source_definitions/list | List all the sourceDefinitions the current Airbyte deployment is configured to use
 [**list_source_definitions_for_workspace**](SourceDefinitionApi.md#list_source_definitions_for_workspace) | **POST** /v1/source_definitions/list_for_workspace | List all the sourceDefinitions the given workspace is configured to use
 [**revoke_source_definition_from_workspace**](SourceDefinitionApi.md#revoke_source_definition_from_workspace) | **POST** /v1/source_definitions/revoke_definition | revoke a grant to a private, non-custom sourceDefinition from a given workspace
-[**update_custom_source_definition**](SourceDefinitionApi.md#update_custom_source_definition) | **POST** /v1/source_definitions/update_custom | Update a custom sourceDefinition for the given workspace
 [**update_source_definition**](SourceDefinitionApi.md#update_source_definition) | **POST** /v1/source_definitions/update | Update a sourceDefinition
 
 
@@ -36,62 +33,6 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**crate::models::SourceDefinitionRead**](SourceDefinitionRead.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-
-## create_source_definition
-
-> crate::models::SourceDefinitionRead create_source_definition(source_definition_create)
-Creates a sourceDefinition
-
-### Parameters
-
-
-Name | Type | Description  | Required | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-**source_definition_create** | Option<[**SourceDefinitionCreate**](SourceDefinitionCreate.md)> |  |  |
-
-### Return type
-
-[**crate::models::SourceDefinitionRead**](SourceDefinitionRead.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-
-## delete_custom_source_definition
-
-> delete_custom_source_definition(source_definition_id_with_workspace_id)
-Delete a custom source definition for the given workspace
-
-### Parameters
-
-
-Name | Type | Description  | Required | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-**source_definition_id_with_workspace_id** | [**SourceDefinitionIdWithWorkspaceId**](SourceDefinitionIdWithWorkspaceId.md) |  | [required] |
-
-### Return type
-
- (empty response body)
 
 ### Authorization
 
@@ -340,34 +281,6 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
  (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-
-## update_custom_source_definition
-
-> crate::models::SourceDefinitionRead update_custom_source_definition(custom_source_definition_update)
-Update a custom sourceDefinition for the given workspace
-
-### Parameters
-
-
-Name | Type | Description  | Required | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-**custom_source_definition_update** | Option<[**CustomSourceDefinitionUpdate**](CustomSourceDefinitionUpdate.md)> |  |  |
-
-### Return type
-
-[**crate::models::SourceDefinitionRead**](SourceDefinitionRead.md)
 
 ### Authorization
 
