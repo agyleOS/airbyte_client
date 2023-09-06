@@ -1,7 +1,7 @@
 /*
  * Airbyte Configuration API
  *
- * Airbyte Configuration API [https://airbyte.io](https://airbyte.io).  This API is a collection of HTTP RPC-style methods. While it is not a REST API, those familiar with REST should find the conventions of this API recognizable.  Here are some conventions that this API follows: * All endpoints are http POST methods. * All endpoints accept data via `application/json` request bodies. The API does not accept any data via query params. * The naming convention for endpoints is: localhost:8000/{VERSION}/{METHOD_FAMILY}/{METHOD_NAME} e.g. `localhost:8000/v1/connections/create`. * For all `update` methods, the whole object must be passed in, even the fields that did not change.  Authentication (OSS): * When authenticating to the Configuration API, you must use Basic Authentication by setting the Authentication Header to Basic and base64 encoding the username and password (which are `airbyte` and `password` by default - so base64 encoding `airbyte:password` results in `YWlyYnl0ZTpwYXNzd29yZA==`). So the full header reads `'Authorization': \"Basic YWlyYnl0ZTpwYXNzd29yZA==\"`
+ * Airbyte Configuration API [https://airbyte.io](https://airbyte.io).  The Configuration API is an internal Airbyte API that is designed for communications between different Airbyte components. * Its main purpose is to enable the Airbyte Engineering team to configure the internal state of [Airbyte Cloud](https://airbyte.com/airbyte-cloud) * It is also sometimes used by OSS users to configure their own Self-Hosted Airbyte deployment (internal state, etc)  WARNING * Airbyte does NOT have active commitments to support this API long-term. * OSS users can utilize the Configuration API, but at their own risk. * This API is utilized internally by the Airbyte Engineering team and may be modified in the future if the need arises. * Modifications by the Airbyte Engineering team could create breaking changes and OSS users would need to update their code to catch up to any backwards incompatible changes in the API.  This API is a collection of HTTP RPC-style methods. While it is not a REST API, those familiar with REST should find the conventions of this API recognizable.  Here are some conventions that this API follows: * All endpoints are http POST methods. * All endpoints accept data via `application/json` request bodies. The API does not accept any data via query params. * The naming convention for endpoints is: localhost:8000/api/{VERSION}/{METHOD_FAMILY}/{METHOD_NAME} e.g. `localhost:8000/api/v1/connections/create`. * For all `update` methods, the whole object must be passed in, even the fields that did not change.  Authentication (OSS): * When authenticating to the Configuration API, you must use Basic Authentication by setting the Authentication Header to Basic and base64 encoding the username and password (which are `airbyte` and `password` by default - so base64 encoding `airbyte:password` results in `YWlyYnl0ZTpwYXNzd29yZA==`). So the full header reads `'Authorization': \"Basic YWlyYnl0ZTpwYXNzd29yZA==\"`
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: contact@airbyte.io
@@ -12,6 +12,15 @@ use reqwest;
 
 use super::{configuration, Error};
 use crate::apis::ResponseContent;
+
+/// struct for typed errors of method [`apply_schema_change_for_source`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ApplySchemaChangeForSourceError {
+    Status404(crate::models::NotFoundKnownExceptionInfo),
+    Status422(crate::models::InvalidInputExceptionInfo),
+    UnknownValue(serde_json::Value),
+}
 
 /// struct for typed errors of method [`check_connection_to_source`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -66,6 +75,15 @@ pub enum DiscoverSchemaForSourceError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`get_most_recent_source_actor_catalog`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetMostRecentSourceActorCatalogError {
+    Status404(crate::models::NotFoundKnownExceptionInfo),
+    Status422(crate::models::InvalidInputExceptionInfo),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`get_source`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -79,6 +97,15 @@ pub enum GetSourceError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListSourcesForWorkspaceError {
+    Status404(crate::models::NotFoundKnownExceptionInfo),
+    Status422(crate::models::InvalidInputExceptionInfo),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`partial_update_source`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum PartialUpdateSourceError {
     Status404(crate::models::NotFoundKnownExceptionInfo),
     Status422(crate::models::InvalidInputExceptionInfo),
     UnknownValue(serde_json::Value),
@@ -99,6 +126,54 @@ pub enum UpdateSourceError {
     Status404(crate::models::NotFoundKnownExceptionInfo),
     Status422(crate::models::InvalidInputExceptionInfo),
     UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`write_discover_catalog_result`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum WriteDiscoverCatalogResultError {
+    UnknownValue(serde_json::Value),
+}
+
+pub async fn apply_schema_change_for_source(
+    configuration: &configuration::Configuration,
+    source_auto_propagate_change: crate::models::SourceAutoPropagateChange,
+) -> Result<(), Error<ApplySchemaChangeForSourceError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!(
+        "{}/v1/sources/apply_schema_changes",
+        local_var_configuration.base_path
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    local_var_req_builder = local_var_req_builder.json(&source_auto_propagate_change);
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        Ok(())
+    } else {
+        let local_var_entity: Option<ApplySchemaChangeForSourceError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
+        Err(Error::ResponseError(local_var_error))
+    }
 }
 
 pub async fn check_connection_to_source(
@@ -338,6 +413,47 @@ pub async fn discover_schema_for_source(
     }
 }
 
+pub async fn get_most_recent_source_actor_catalog(
+    configuration: &configuration::Configuration,
+    source_id_request_body: crate::models::SourceIdRequestBody,
+) -> Result<crate::models::ActorCatalogWithUpdatedAt, Error<GetMostRecentSourceActorCatalogError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!(
+        "{}/v1/sources/most_recent_source_actor_catalog",
+        local_var_configuration.base_path
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    local_var_req_builder = local_var_req_builder.json(&source_id_request_body);
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<GetMostRecentSourceActorCatalogError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
 pub async fn get_source(
     configuration: &configuration::Configuration,
     source_id_request_body: crate::models::SourceIdRequestBody,
@@ -415,6 +531,47 @@ pub async fn list_sources_for_workspace(
     }
 }
 
+pub async fn partial_update_source(
+    configuration: &configuration::Configuration,
+    partial_source_update: crate::models::PartialSourceUpdate,
+) -> Result<crate::models::SourceRead, Error<PartialUpdateSourceError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!(
+        "{}/v1/sources/partial_update",
+        local_var_configuration.base_path
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    local_var_req_builder = local_var_req_builder.json(&partial_source_update);
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<PartialUpdateSourceError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
 pub async fn search_sources(
     configuration: &configuration::Configuration,
     source_search: crate::models::SourceSearch,
@@ -481,6 +638,47 @@ pub async fn update_source(
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
         let local_var_entity: Option<UpdateSourceError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+pub async fn write_discover_catalog_result(
+    configuration: &configuration::Configuration,
+    source_discover_schema_write_request_body: crate::models::SourceDiscoverSchemaWriteRequestBody,
+) -> Result<crate::models::DiscoverCatalogResult, Error<WriteDiscoverCatalogResultError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!(
+        "{}/v1/sources/write_discover_catalog_result",
+        local_var_configuration.base_path
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    local_var_req_builder = local_var_req_builder.json(&source_discover_schema_write_request_body);
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<WriteDiscoverCatalogResultError> =
             serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent {
             status: local_var_status,

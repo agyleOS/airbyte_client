@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 ## complete_destination_o_auth
 
-> ::std::collections::HashMap<String, serde_json::Value> complete_destination_o_auth(complete_destination_o_auth_request)
+> crate::models::CompleteOAuthResponse complete_destination_o_auth(complete_destination_o_auth_request)
 Given a destination def ID generate an access/refresh token etc.
 
 ### Parameters
@@ -24,7 +24,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**::std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)
+[**crate::models::CompleteOAuthResponse**](CompleteOAuthResponse.md)
 
 ### Authorization
 

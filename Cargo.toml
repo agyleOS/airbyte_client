@@ -1,6 +1,6 @@
 [package]
 name = "airbyte_client"
-version = "0.40.26-1"
+version = "0.41.0"
 authors = ["contact@airbyte.io"]
 
 license = "MIT"

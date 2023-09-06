@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**status** | **String** |  | 
+**status** | Option<**String**> |  | [optional]
 **message** | Option<**String**> |  | [optional]
 **job_info** | [**crate::models::SynchronousJobRead**](SynchronousJobRead.md) |  | 
 

@@ -29,6 +29,7 @@ Name | Type | Description | Notes
 **geography** | Option<[**crate::models::Geography**](Geography.md)> |  | [optional]
 **schema_change** | [**crate::models::SchemaChange**](SchemaChange.md) |  | 
 **notify_schema_changes** | **bool** |  | 
+**notify_schema_changes_by_email** | **bool** |  | 
 **non_breaking_changes_preference** | [**crate::models::NonBreakingChangesPreference**](NonBreakingChangesPreference.md) |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

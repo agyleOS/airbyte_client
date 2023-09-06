@@ -9,6 +9,8 @@ Method | HTTP request | Description
 [**get_job_debug_info**](JobsApi.md#get_job_debug_info) | **POST** /v1/jobs/get_debug_info | Gets all information needed to debug this job
 [**get_job_info**](JobsApi.md#get_job_info) | **POST** /v1/jobs/get | Get information about a job
 [**get_job_info_light**](JobsApi.md#get_job_info_light) | **POST** /v1/jobs/get_light | Get information about a job excluding attempt info and logs
+[**get_job_info_without_logs**](JobsApi.md#get_job_info_without_logs) | **POST** /v1/jobs/get_without_logs | Get information about a job excluding logs
+[**get_last_replication_job**](JobsApi.md#get_last_replication_job) | **POST** /v1/jobs/get_last_replication_job | 
 [**list_jobs_for**](JobsApi.md#list_jobs_for) | **POST** /v1/jobs/list | Returns recent jobs for a connection. Jobs are returned in descending order by createdAt.
 
 
@@ -140,6 +142,62 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**crate::models::JobInfoLightRead**](JobInfoLightRead.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## get_job_info_without_logs
+
+> crate::models::JobInfoRead get_job_info_without_logs(job_id_request_body)
+Get information about a job excluding logs
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**job_id_request_body** | [**JobIdRequestBody**](JobIdRequestBody.md) |  | [required] |
+
+### Return type
+
+[**crate::models::JobInfoRead**](JobInfoRead.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## get_last_replication_job
+
+> crate::models::JobOptionalRead get_last_replication_job(connection_id_request_body)
+
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**connection_id_request_body** | [**ConnectionIdRequestBody**](ConnectionIdRequestBody.md) |  | [required] |
+
+### Return type
+
+[**crate::models::JobOptionalRead**](JobOptionalRead.md)
 
 ### Authorization
 

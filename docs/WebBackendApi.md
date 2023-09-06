@@ -10,7 +10,7 @@ Method | HTTP request | Description
 [**web_backend_get_connection**](WebBackendApi.md#web_backend_get_connection) | **POST** /v1/web_backend/connections/get | Get a connection
 [**web_backend_get_workspace_state**](WebBackendApi.md#web_backend_get_workspace_state) | **POST** /v1/web_backend/workspace/state | Returns the current state of a workspace
 [**web_backend_list_connections_for_workspace**](WebBackendApi.md#web_backend_list_connections_for_workspace) | **POST** /v1/web_backend/connections/list | Returns all non-deleted connections for a workspace.
-[**web_backend_list_geographies**](WebBackendApi.md#web_backend_list_geographies) | **POST** /v1/web_backend/geographies/list | Returns available geographies can be selected to run data syncs in a particular geography.  The 'auto' entry indicates that the sync will be automatically assigned to a geography according  to the platform default behavior. Entries other than 'auto' are two-letter country codes that  follow the ISO 3166-1 alpha-2 standard. 
+[**web_backend_list_geographies**](WebBackendApi.md#web_backend_list_geographies) | **POST** /v1/web_backend/geographies/list | Returns available geographies can be selected to run data syncs in a particular geography. The 'auto' entry indicates that the sync will be automatically assigned to a geography according to the platform default behavior. Entries other than 'auto' are two-letter country codes that follow the ISO 3166-1 alpha-2 standard. 
 [**web_backend_update_connection**](WebBackendApi.md#web_backend_update_connection) | **POST** /v1/web_backend/connections/update | Update a connection
 
 
@@ -154,7 +154,7 @@ No authorization required
 
 ## web_backend_list_connections_for_workspace
 
-> crate::models::WebBackendConnectionReadList web_backend_list_connections_for_workspace(workspace_id_request_body)
+> crate::models::WebBackendConnectionReadList web_backend_list_connections_for_workspace(web_backend_connection_list_request_body)
 Returns all non-deleted connections for a workspace.
 
 ### Parameters
@@ -162,7 +162,7 @@ Returns all non-deleted connections for a workspace.
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**workspace_id_request_body** | [**WorkspaceIdRequestBody**](WorkspaceIdRequestBody.md) |  | [required] |
+**web_backend_connection_list_request_body** | [**WebBackendConnectionListRequestBody**](WebBackendConnectionListRequestBody.md) |  | [required] |
 
 ### Return type
 
@@ -183,7 +183,7 @@ No authorization required
 ## web_backend_list_geographies
 
 > crate::models::WebBackendGeographiesListResult web_backend_list_geographies()
-Returns available geographies can be selected to run data syncs in a particular geography.  The 'auto' entry indicates that the sync will be automatically assigned to a geography according  to the platform default behavior. Entries other than 'auto' are two-letter country codes that  follow the ISO 3166-1 alpha-2 standard. 
+Returns available geographies can be selected to run data syncs in a particular geography. The 'auto' entry indicates that the sync will be automatically assigned to a geography according to the platform default behavior. Entries other than 'auto' are two-letter country codes that follow the ISO 3166-1 alpha-2 standard. 
 
 Returns all available geographies in which a data sync can run.
 
@@ -212,7 +212,7 @@ No authorization required
 > crate::models::WebBackendConnectionRead web_backend_update_connection(web_backend_connection_update)
 Update a connection
 
-Apply a patch-style update to a connection. Only fields present on the update request body will be updated. Any operations that lack an ID will be created. Then, the newly created operationId will be applied to the connection along with the rest of the operationIds in the request body. Apply a patch-style update to a connection. Only fields present on the update request body will be updated. Note that if a catalog is present in the request body, the connection's entire catalog will be replaced with the catalog from the request. This means that to modify a single stream, the entire new catalog  containing the updated stream needs to be sent. 
+Apply a patch-style update to a connection. Only fields present on the update request body will be updated. Any operations that lack an ID will be created. Then, the newly created operationId will be applied to the connection along with the rest of the operationIds in the request body. Apply a patch-style update to a connection. Only fields present on the update request body will be updated. Note that if a catalog is present in the request body, the connection's entire catalog will be replaced with the catalog from the request. This means that to modify a single stream, the entire new catalog containing the updated stream needs to be sent. 
 
 ### Parameters
 
