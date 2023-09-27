@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **news** | Option<**bool**> |  | [optional]
 **security_updates** | Option<**bool**> |  | [optional]
 **notifications** | Option<[**Vec<crate::models::Notification>**](Notification.md)> |  | [optional]
+**notification_settings** | Option<[**crate::models::NotificationSettings**](NotificationSettings.md)> |  | [optional]
 **first_completed_sync** | Option<**bool**> |  | [optional]
 **feedback_done** | Option<**bool**> |  | [optional]
 **default_geography** | Option<[**crate::models::Geography**](Geography.md)> |  | [optional]

@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **records_emitted** | Option<**i64**> |  | [optional]
 **bytes_emitted** | Option<**i64**> |  | [optional]
 **state_messages_emitted** | Option<**i64**> |  | [optional]
+**bytes_committed** | Option<**i64**> |  | [optional]
 **records_committed** | Option<**i64**> |  | [optional]
 **estimated_records** | Option<**i64**> |  | [optional]
 **estimated_bytes** | Option<**i64**> |  | [optional]

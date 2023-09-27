@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **news** | Option<**bool**> |  | [optional]
 **security_updates** | Option<**bool**> |  | [optional]
 **notifications** | Option<[**Vec<crate::models::Notification>**](Notification.md)> |  | [optional]
+**notification_settings** | Option<[**crate::models::NotificationSettings**](NotificationSettings.md)> |  | [optional]
 **display_setup_wizard** | Option<**bool**> |  | [optional]
 **default_geography** | Option<[**crate::models::Geography**](Geography.md)> |  | [optional]
 **webhook_configs** | Option<[**Vec<crate::models::WebhookConfigWrite>**](WebhookConfigWrite.md)> |  | [optional]

@@ -19,6 +19,7 @@ Name | Type | Description | Notes
 **source_catalog_id** | Option<[**uuid::Uuid**](uuid::Uuid.md)> |  | [optional]
 **geography** | Option<[**crate::models::Geography**](Geography.md)> |  | [optional]
 **notify_schema_changes** | Option<**bool**> |  | [optional]
+**notify_schema_changes_by_email** | Option<**bool**> |  | [optional]
 **non_breaking_changes_preference** | Option<[**crate::models::NonBreakingChangesPreference**](NonBreakingChangesPreference.md)> |  | [optional]
 **breaking_change** | Option<**bool**> |  | [optional]
 
