@@ -10,6 +10,8 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct DestinationDefinitionRead {
+    #[serde(rename="custom")]
+    pub custom: bool,
     #[serde(rename = "destinationDefinitionId")]
     pub destination_definition_id: uuid::Uuid,
     #[serde(rename = "name")]
@@ -29,7 +31,7 @@ pub struct DestinationDefinitionRead {
     pub release_stage: Option<crate::models::ReleaseStage>,
     /// The date when this connector was first released, in yyyy-mm-dd format.
     #[serde(rename = "releaseDate", skip_serializing_if = "Option::is_none")]
-    pub release_date: Option<String>,
+    pub release_date: Option<Vec<u16>>,
     #[serde(
         rename = "resourceRequirements",
         skip_serializing_if = "Option::is_none"
@@ -44,6 +46,7 @@ pub struct DestinationDefinitionRead {
 
 impl DestinationDefinitionRead {
     pub fn new(
+        custom: bool,
         destination_definition_id: uuid::Uuid,
         name: String,
         docker_repository: String,
@@ -53,6 +56,7 @@ impl DestinationDefinitionRead {
         normalization_config: crate::models::NormalizationDestinationDefinitionConfig,
     ) -> DestinationDefinitionRead {
         DestinationDefinitionRead {
+            custom,
             destination_definition_id,
             name,
             docker_repository,
