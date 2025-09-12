@@ -1,11 +1,11 @@
 # Combined configuration from 11 templates
-# Scanners: Semgrep, OWASP Depscan + cdxgen, tfsec, grype, Gitleaks, CDXGen, checkov, Trivy, Trufflehog, osv-scanner, opengrep
+# Scanners: Semgrep, OWASP Depscan + cdxgen, tfsec, grype, Gitleaks, CDXGen, checkov, Trivy, osv-scanner, Trufflehog, opengrep
 # Generated for GITHUB by ScanDog
 name: Combined Security Scanner Pipeline
 on:
   pull_request:
     branches:
-      - main
+      - master
   workflow_dispatch:
 
 jobs:
@@ -196,25 +196,6 @@ jobs:
           scanner: Trivy
           backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
           backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
-# Jobs from template: Trufflehog
-  scandog_trufflehog_scan:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install & Run Trufflehog
-        run: |
-          curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sh -s -- -b /usr/local/bin
-          trufflehog filesystem --json . > trufflehog.json
-      - name: Import results to ScanDog
-        uses: scandogio/scandog-import@v1.0
-        with:
-          ci_run_id: ${{ github.run_id }}
-          report_file: trufflehog.json
-          workflow_id: "77870259287eac45b40e65decf2207c3"
-          scan_type: Secret Scanning
-          scanner: trufflehog
-          backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
-          backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
 # Jobs from template: osv-scanner
   scandog_osv_scanner_scan:
     runs-on: ubuntu-latest
@@ -235,6 +216,25 @@ jobs:
           workflow_id: "77870259287eac45b40e65decf2207c3"
           scan_type: SCA
           scanner: osv-scanner
+          backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
+          backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
+# Jobs from template: Trufflehog
+  scandog_trufflehog_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install & Run Trufflehog
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sh -s -- -b /usr/local/bin
+          trufflehog filesystem --json . > trufflehog.json
+      - name: Import results to ScanDog
+        uses: scandogio/scandog-import@v1.0
+        with:
+          ci_run_id: ${{ github.run_id }}
+          report_file: trufflehog.json
+          workflow_id: "77870259287eac45b40e65decf2207c3"
+          scan_type: Secret Scanning
+          scanner: trufflehog
           backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
           backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
 # Jobs from template: opengrep
