@@ -148,7 +148,7 @@ jobs:
           backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
           backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
 # Jobs from template: Trivy
-  scandog_trivy_scan:
+  scandog_trivy_scan1:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
