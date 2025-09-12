@@ -1,5 +1,5 @@
-# Combined configuration from 12 templates
-# Scanners: Semgrep, OWASP Depscan + cdxgen, tfsec, grype, Gitleaks, CDXGen, Trivy, checkov, Trivy, Trufflehog, osv-scanner, opengrep
+# Combined configuration from 11 templates
+# Scanners: Semgrep, OWASP Depscan + cdxgen, tfsec, grype, Gitleaks, CDXGen, checkov, Trivy, Trufflehog, osv-scanner, opengrep
 # Generated for GITHUB by ScanDog
 name: Combined Security Scanner Pipeline
 on:
@@ -147,28 +147,6 @@ jobs:
           scanner: cdxgen
           backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
           backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
-# Jobs from template: Trivy
-  scandog_trivy_scan_a:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: rabbitmq:management
-          format: 'json'
-          output: 'trivy-results.json'
-      - name: Import results to ScanDog
-        uses: scandogio/scandog-import@v1.0
-        with:
-          ci_run_id: ${{ github.run_id }}
-          report_file: trivy-results.json
-          workflow_id: "77870259287eac45b40e65decf2207c3"
-          scan_type: Container Scanner
-          scanner: Trivy
-          backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
-          backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
 # Jobs from template: checkov
   scandog_checkov_scan:
     permissions:
@@ -195,7 +173,7 @@ jobs:
           backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
           backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
 # Jobs from template: Trivy
-  scandog_trivy_scan_b:
+  scandog_trivy_scan:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
