@@ -1,13 +1,242 @@
 # Combined configuration from 12 templates
-# Scanners: osv-scanner, opengrep, Trufflehog, Trivy, checkov, Trivy, CDXGen, Gitleaks, grype, tfsec, OWASP Depscan + cdxgen, Semgrep
+# Scanners: Semgrep, OWASP Depscan + cdxgen, tfsec, grype, Gitleaks, CDXGen, Trivy, checkov, Trivy, Trufflehog, osv-scanner, opengrep
 # Generated for GITHUB by ScanDog
 name: Combined Security Scanner Pipeline
 on:
-  push:
+  pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
+# Jobs from template: Semgrep
+  scandog_semgrep_scan:
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: semgrep scan
+        run: semgrep scan --config auto --json > semgrep.json
+      - name: Import results to ScanDog
+        uses: scandogio/scandog-import@v1.0
+        with:
+          ci_run_id: ${{ github.run_id }}
+          report_file: semgrep.json
+          workflow_id: "77870259287eac45b40e65decf2207c3"
+          scan_type: SAST
+          scanner: Semgrep
+          backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
+          backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
+# Jobs from template: OWASP Depscan + cdxgen
+  scandog_depscan_sca:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Install OWASP-depscan
+        run: |
+          pip install owasp-depscan
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 21
+      - name: Install cdxgen
+        run: npm install -g @cyclonedx/cdxgen
+      - name: scan SBOM by OWASP depscan
+        run: |
+          cd $GITHUB_WORKSPACE
+          export FETCH_LICENSE=true
+          depscan -i . --reports-dir .
+      - name: Import results to ScanDog
+        uses: scandogio/scandog-import@v1.0
+        with:
+          ci_run_id: ${{ github.run_id }}
+          report_file: sbom-universal.vdr.json
+          workflow_id: "77870259287eac45b40e65decf2207c3"
+          scan_type: SCA
+          scanner: depscan
+          backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
+          backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
+# Jobs from template: tfsec
+  scandog_tfsec_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run tfsec
+        uses: aquasecurity/tfsec-action@v1.0.0
+        with:
+          format: json
+          out: tfsec-results.json
+      - name: Import results to ScanDog
+        uses: scandogio/scandog-import@v1.0
+        with:
+          ci_run_id: ${{ github.run_id }}
+          report_file: tfsec-results.json
+          workflow_id: "77870259287eac45b40e65decf2207c3"
+          scan_type: IaC Scanner
+          scanner: tfsec
+          backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
+          backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
+# Jobs from template: grype
+  scandog_grype_sca:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Grype
+        uses: anchore/scan-action@v6
+        with:
+          path: .
+          output-format: json
+          output-file: grype-results.json
+          fail-build: false
+      - name: Import results to ScanDog
+        uses: scandogio/scandog-import@v1.0
+        with:
+          ci_run_id: ${{ github.run_id }}
+          report_file: grype-results.json
+          workflow_id: "77870259287eac45b40e65decf2207c3"
+          scan_type: SCA
+          scanner: grype
+          backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
+          backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
+# Jobs from template: Gitleaks
+  scandog_gitleaks_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install & Run Gitleaks
+        run: |
+          git clone https://github.com/gitleaks/gitleaks.git
+          cd gitleaks
+          make build
+          cd $GITHUB_WORKSPACE
+          gitleaks dir . -f json -r gitleaks.json
+      - name: Import results to ScanDog
+        uses: scandogio/scandog-import@v1.0
+        with:
+          ci_run_id: ${{ github.run_id }}
+          report_file: gitleaks.json
+          workflow_id: "77870259287eac45b40e65decf2207c3"
+          scan_type: Secret Scanning
+          scanner: gitleaks
+          backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
+          backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
+# Jobs from template: CDXGen
+  scandog_cdxgen_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install cdxgen
+        run: npm install -g @cyclonedx/cdxgen
+      - name: Generate SBOM
+        run: cdxgen --input . --output sbom.json
+      - name: Import results to ScanDog
+        uses: scandogio/scandog-import@v1.0
+        with:
+          ci_run_id: ${{ github.run_id }}
+          report_file: sbom.json
+          workflow_id: "77870259287eac45b40e65decf2207c3"
+          scan_type: SBOM
+          scanner: cdxgen
+          backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
+          backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
+# Jobs from template: Trivy
+  scandog_trivy_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: rabbitmq:management
+          format: 'json'
+          output: 'trivy-results.json'
+      - name: Import results to ScanDog
+        uses: scandogio/scandog-import@v1.0
+        with:
+          ci_run_id: ${{ github.run_id }}
+          report_file: trivy-results.json
+          workflow_id: "77870259287eac45b40e65decf2207c3"
+          scan_type: Container Scanner
+          scanner: Trivy
+          backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
+          backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
+# Jobs from template: checkov
+  scandog_checkov_scan:
+    permissions:
+      contents: read # for actions/checkout to fetch code
+      security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
+      actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Checkov GitHub Action
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          soft_fail: true
+          output_format: json
+          output_file_path: .
+      - name: Import results to ScanDog
+        uses: scandogio/scandog-import@v1.0
+        with:
+          ci_run_id: ${{ github.run_id }}
+          report_file: results_json.json
+          workflow_id: "77870259287eac45b40e65decf2207c3"
+          scan_type: IaC Scanner
+          scanner: checkov
+          backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
+          backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
+# Jobs from template: Trivy
+  scandog_trivy_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: .
+          format: 'json'
+          output: 'trivy-results.json'
+          scanners: 'misconfig'
+      - name: Import results to ScanDog
+        uses: scandogio/scandog-import@v1.0
+        with:
+          ci_run_id: ${{ github.run_id }}
+          report_file: trivy-results.json
+          workflow_id: "77870259287eac45b40e65decf2207c3"
+          scan_type: IaC Scanner
+          scanner: Trivy
+          backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
+          backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
+# Jobs from template: Trufflehog
+  scandog_trufflehog_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install & Run Trufflehog
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sh -s -- -b /usr/local/bin
+          trufflehog filesystem --json . > trufflehog.json
+      - name: Import results to ScanDog
+        uses: scandogio/scandog-import@v1.0
+        with:
+          ci_run_id: ${{ github.run_id }}
+          report_file: trufflehog.json
+          workflow_id: "77870259287eac45b40e65decf2207c3"
+          scan_type: Secret Scanning
+          scanner: trufflehog
+          backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
+          backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
 # Jobs from template: osv-scanner
   scandog_osv_scanner_scan:
     runs-on: ubuntu-latest
@@ -53,233 +282,5 @@ jobs:
           workflow_id: "77870259287eac45b40e65decf2207c3"
           scan_type: SAST
           scanner: opengrep
-          backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
-          backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
-# Jobs from template: Trufflehog
-  scandog_trufflehog_scan:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install & Run Trufflehog
-        run: |
-          curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sh -s -- -b /usr/local/bin
-          trufflehog filesystem --json . > trufflehog.json
-      - name: Import results to ScanDog
-        uses: scandogio/scandog-import@v1.0
-        with:
-          ci_run_id: ${{ github.run_id }}
-          report_file: trufflehog.json
-          workflow_id: "77870259287eac45b40e65decf2207c3"
-          scan_type: Secret Scanning
-          scanner: trufflehog
-          backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
-          backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
-# Jobs from template: Trivy
-  scandog_trivy_scan:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: 'fs'
-          scan-ref: .
-          format: 'json'
-          output: 'trivy-results.json'
-          scanners: 'misconfig'
-      - name: Import results to ScanDog
-        uses: scandogio/scandog-import@v1.0
-        with:
-          ci_run_id: ${{ github.run_id }}
-          report_file: trivy-results.json
-          workflow_id: "77870259287eac45b40e65decf2207c3"
-          scan_type: IaC Scanner
-          scanner: Trivy
-          backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
-          backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
-# Jobs from template: checkov
-  scandog_checkov_scan:
-    permissions:
-      contents: read # for actions/checkout to fetch code
-      security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
-      actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Checkov GitHub Action
-        uses: bridgecrewio/checkov-action@v12
-        with:
-          soft_fail: true
-          output_format: json
-          output_file_path: .
-      - name: Import results to ScanDog
-        uses: scandogio/scandog-import@v1.0
-        with:
-          ci_run_id: ${{ github.run_id }}
-          report_file: results_json.json
-          workflow_id: "77870259287eac45b40e65decf2207c3"
-          scan_type: IaC Scanner
-          scanner: checkov
-          backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
-          backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
-# Jobs from template: Trivy
-  scandog_trivy_scan:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: rabbitmq:management
-          format: 'json'
-          output: 'trivy-results.json'
-      - name: Import results to ScanDog
-        uses: scandogio/scandog-import@v1.0
-        with:
-          ci_run_id: ${{ github.run_id }}
-          report_file: trivy-results.json
-          workflow_id: "77870259287eac45b40e65decf2207c3"
-          scan_type: Container Scanner
-          scanner: Trivy
-          backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
-          backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
-# Jobs from template: CDXGen
-  scandog_cdxgen_scan:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install cdxgen
-        run: npm install -g @cyclonedx/cdxgen
-      - name: Generate SBOM
-        run: cdxgen --input . --output sbom.json
-      - name: Import results to ScanDog
-        uses: scandogio/scandog-import@v1.0
-        with:
-          ci_run_id: ${{ github.run_id }}
-          report_file: sbom.json
-          workflow_id: "77870259287eac45b40e65decf2207c3"
-          scan_type: SBOM
-          scanner: cdxgen
-          backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
-          backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
-# Jobs from template: Gitleaks
-  scandog_gitleaks_scan:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Install & Run Gitleaks
-        run: |
-          git clone https://github.com/gitleaks/gitleaks.git
-          cd gitleaks
-          make build
-          cd $GITHUB_WORKSPACE
-          gitleaks dir . -f json -r gitleaks.json
-      - name: Import results to ScanDog
-        uses: scandogio/scandog-import@v1.0
-        with:
-          ci_run_id: ${{ github.run_id }}
-          report_file: gitleaks.json
-          workflow_id: "77870259287eac45b40e65decf2207c3"
-          scan_type: Secret Scanning
-          scanner: gitleaks
-          backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
-          backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
-# Jobs from template: grype
-  scandog_grype_sca:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Run Grype
-        uses: anchore/scan-action@v6
-        with:
-          path: .
-          output-format: json
-          output-file: grype-results.json
-          fail-build: false
-      - name: Import results to ScanDog
-        uses: scandogio/scandog-import@v1.0
-        with:
-          ci_run_id: ${{ github.run_id }}
-          report_file: grype-results.json
-          workflow_id: "77870259287eac45b40e65decf2207c3"
-          scan_type: SCA
-          scanner: grype
-          backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
-          backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
-# Jobs from template: tfsec
-  scandog_tfsec_scan:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Run tfsec
-        uses: aquasecurity/tfsec-action@v1.0.0
-        with:
-          format: json
-          out: tfsec-results.json
-      - name: Import results to ScanDog
-        uses: scandogio/scandog-import@v1.0
-        with:
-          ci_run_id: ${{ github.run_id }}
-          report_file: tfsec-results.json
-          workflow_id: "77870259287eac45b40e65decf2207c3"
-          scan_type: IaC Scanner
-          scanner: tfsec
-          backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
-          backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
-# Jobs from template: OWASP Depscan + cdxgen
-  scandog_depscan_sca:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
-      - name: Install OWASP-depscan
-        run: |
-          pip install owasp-depscan
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 21
-      - name: Install cdxgen
-        run: npm install -g @cyclonedx/cdxgen
-      - name: scan SBOM by OWASP depscan
-        run: |
-          cd $GITHUB_WORKSPACE
-          export FETCH_LICENSE=true
-          depscan -i . --reports-dir .
-      - name: Import results to ScanDog
-        uses: scandogio/scandog-import@v1.0
-        with:
-          ci_run_id: ${{ github.run_id }}
-          report_file: sbom-universal.vdr.json
-          workflow_id: "77870259287eac45b40e65decf2207c3"
-          scan_type: SCA
-          scanner: depscan
-          backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
-          backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
-# Jobs from template: Semgrep
-  scandog_semgrep_scan:
-    runs-on: ubuntu-latest
-    container:
-      image: semgrep/semgrep
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: semgrep scan
-        run: semgrep scan --config auto --json > semgrep.json
-      - name: Import results to ScanDog
-        uses: scandogio/scandog-import@v1.0
-        with:
-          ci_run_id: ${{ github.run_id }}
-          report_file: semgrep.json
-          workflow_id: "77870259287eac45b40e65decf2207c3"
-          scan_type: SAST
-          scanner: Semgrep
           backend_api_token: ${{ secrets.SCANDOG_BACKEND_API_TOKEN }}
           backend_url: ${{ secrets.SCANDOG_BACKEND_URL }}
